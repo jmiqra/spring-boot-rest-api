@@ -5,7 +5,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.asraf.models.User;
+import com.asraf.core.models.User;
 
 @Transactional
 public interface UserRepository  extends CrudRepository<User, Long> {

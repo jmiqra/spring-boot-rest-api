@@ -1,4 +1,4 @@
-package com.asraf.dto;
+package com.asraf.core.dtos.request;
 
 public class UserRequestDto {
 	private String email;

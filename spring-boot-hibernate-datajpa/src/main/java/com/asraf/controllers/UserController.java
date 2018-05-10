@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.asraf.core.dtos.request.UserRequestDto;
+import com.asraf.core.dtos.response.UserResponseDto;
+import com.asraf.core.models.User;
 import com.asraf.core.services.UserService;
-import com.asraf.dto.UserRequestDto;
-import com.asraf.models.User;
 
 @RestController
 @RequestMapping("/users")
@@ -34,10 +35,13 @@ public class UserController {
 
 	@GetMapping("/get-by-email/{email}")
 	@ResponseBody
-	public ResponseEntity<User> getByEmail(@PathVariable String email) {
+	public ResponseEntity<UserResponseDto> getByEmail(@PathVariable String email) {
 		try {
 			User user = userService.getByEmail(email);
-			return ResponseEntity.ok(user);
+			UserResponseDto responseDto = new UserResponseDto();
+			responseDto.setEmail(user.getEmail());
+			responseDto.setName(user.getName());
+			return ResponseEntity.ok(responseDto);
 		} catch (Exception ex) {
 			return ResponseEntity.notFound().build();
 		}
