@@ -2,6 +2,7 @@ package com.asraf.controllers;
 
 import java.util.NoSuchElementException;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private ModelMapper modelMapper;
+
 	@GetMapping("")
 	@ResponseBody
 	public ResponseEntity<Iterable<User>> getAll() {
@@ -38,9 +42,7 @@ public class UserController {
 	public ResponseEntity<UserResponseDto> getByEmail(@PathVariable String email) {
 		try {
 			User user = userService.getByEmail(email);
-			UserResponseDto responseDto = new UserResponseDto();
-			responseDto.setEmail(user.getEmail());
-			responseDto.setName(user.getName());
+			UserResponseDto responseDto = modelMapper.map(user, UserResponseDto.class);
 			return ResponseEntity.ok(responseDto);
 		} catch (Exception ex) {
 			return ResponseEntity.notFound().build();
