@@ -13,28 +13,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.asraf.core.repositories.UserRepository;
 import com.asraf.dto.UserRequestDto;
 import com.asraf.models.User;
-import com.asraf.models.UserDao;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
 	@Autowired
-	private UserDao userDao;
+	private UserRepository userRepository;
 
 	@GetMapping("")
 	@ResponseBody
 	public ResponseEntity<Iterable<User>> getAll() {
-		return ResponseEntity.ok(this.userDao.findAll());
+		return ResponseEntity.ok(this.userRepository.findAll());
 	}
 
 	@GetMapping("/get-by-email/{email}")
 	@ResponseBody
 	public ResponseEntity<User> getByEmail(@PathVariable String email) {
 		try {
-			User user = userDao.findByEmail(email);
+			User user = userRepository.findByEmail(email);
 			return ResponseEntity.ok(user);
 		} catch (Exception ex) {
 			return ResponseEntity.notFound().build();
@@ -47,7 +47,7 @@ public class UserController {
 		User user = null;
 		try {
 			user = new User(requestDto.getEmail(), requestDto.getName());
-			userDao.save(user);
+			userRepository.save(user);
 			return ResponseEntity.ok(user);
 		} catch (Exception ex) {
 			return ResponseEntity.badRequest().body("Error creating the user: " + ex.toString());
@@ -58,11 +58,11 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<Object> delete(@PathVariable long id) {
 		try {
-			User user = userDao.findById(id).get();
+			User user = userRepository.findById(id).get();
 			if (user == null) {
 				return ResponseEntity.notFound().build();
 			}
-			userDao.delete(user);
+			userRepository.delete(user);
 			return ResponseEntity.ok(user);
 		} catch (Exception ex) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -74,10 +74,10 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<Object> update(@PathVariable long id, @RequestBody UserRequestDto requestDto) {
 		try {
-			User user = userDao.findById(id).get();
+			User user = userRepository.findById(id).get();
 			user.setEmail(requestDto.getEmail());
 			user.setName(requestDto.getName());
-			userDao.save(user);
+			userRepository.save(user);
 			return ResponseEntity.ok(user);
 		} catch (Exception ex) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -1,11 +1,14 @@
-package com.asraf.models;
+package com.asraf.core.repositories;
+
 
 import javax.transaction.Transactional;
 
 import org.springframework.data.repository.CrudRepository;
 
+import com.asraf.models.User;
+
 @Transactional
-public interface UserDao extends CrudRepository<User, Long> {
+public interface UserRepository  extends CrudRepository<User, Long> {
 
 	/**
 	 * Return the user having the passed email or null if no user is found.
