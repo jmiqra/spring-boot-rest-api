@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.asraf.core.dtos.mapper.UserMappper;
 import com.asraf.core.dtos.request.UserRequestDto;
 import com.asraf.core.dtos.response.UserResponseDto;
 import com.asraf.core.entities.User;
@@ -29,7 +30,7 @@ public class UserController {
 	private UserService userService;
 
 	@Autowired
-	private ModelMapper modelMapper;
+	private UserMappper userMappper;
 
 	@GetMapping("")
 	@ResponseBody
@@ -42,8 +43,7 @@ public class UserController {
 	public ResponseEntity<UserResponseDto> getByEmail(@PathVariable String email) {
 		try {
 			User user = userService.getByEmail(email);
-			UserResponseDto responseDto = modelMapper.map(user, UserResponseDto.class);
-			return ResponseEntity.ok(responseDto);
+			return ResponseEntity.ok(userMappper.getResponseDto(user));
 		} catch (Exception ex) {
 			return ResponseEntity.notFound().build();
 		}
@@ -53,7 +53,7 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<Object> create(@RequestBody UserRequestDto requestDto) {
 		try {
-			User user = modelMapper.map(requestDto, User.class);
+			User user = userMappper.getEntityForCreate(requestDto);
 			userService.save(user);
 			return ResponseEntity.ok(user);
 		} catch (Exception ex) {
