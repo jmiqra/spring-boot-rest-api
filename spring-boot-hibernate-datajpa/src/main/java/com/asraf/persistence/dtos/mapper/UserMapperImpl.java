@@ -18,9 +18,11 @@ public class UserMapperImpl implements UserMappper {
 		return modelMapper.map(requestDto, User.class);
 	}
 
-	// public User getEntityForUpdate(Long id, UserRequestDto requestDto) {
-	// return modelMapper.map(requestDto, User.class).setId(id);
-	// }
+	public User getEntityForUpdate(Long id, UserRequestDto requestDto) {
+		User user = modelMapper.map(requestDto, User.class);
+		user.setId(id);
+		return user;
+	}
 
 	public UserResponseDto getResponseDto(User user) {
 		return modelMapper.map(user, UserResponseDto.class);

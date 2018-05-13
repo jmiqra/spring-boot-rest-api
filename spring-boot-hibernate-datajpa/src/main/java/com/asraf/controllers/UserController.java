@@ -2,7 +2,6 @@ package com.asraf.controllers;
 
 import java.util.NoSuchElementException;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -81,8 +80,7 @@ public class UserController {
 	public ResponseEntity<Object> update(@PathVariable long id, @RequestBody UserRequestDto requestDto) {
 		try {
 			User user = userService.getById(id);
-			user.setEmail(requestDto.getEmail());
-			user.setName(requestDto.getName());
+			user = userMappper.getEntityForUpdate(id, requestDto);
 			userService.save(user);
 			return ResponseEntity.ok(user);
 		} catch (NoSuchElementException nseex) {
