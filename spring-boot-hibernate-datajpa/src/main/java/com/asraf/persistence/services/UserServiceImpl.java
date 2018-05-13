@@ -3,7 +3,7 @@ package com.asraf.persistence.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.asraf.core.models.User;
+import com.asraf.core.entities.User;
 import com.asraf.core.repositories.UserRepository;
 import com.asraf.core.services.UserService;
 

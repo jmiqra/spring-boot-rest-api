@@ -1,4 +1,4 @@
-package com.asraf.core.models;
+package com.asraf.core.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

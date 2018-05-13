@@ -1,6 +1,6 @@
 package com.asraf.core.services;
 
-import com.asraf.core.models.User;
+import com.asraf.core.entities.User;
 
 public interface UserService {
 	User save(User user);

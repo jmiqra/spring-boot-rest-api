@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.asraf.core.dtos.request.UserRequestDto;
 import com.asraf.core.dtos.response.UserResponseDto;
-import com.asraf.core.models.User;
+import com.asraf.core.entities.User;
 import com.asraf.core.services.UserService;
 
 @RestController
