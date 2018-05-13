@@ -1,5 +1,9 @@
 package com.asraf.persistence.dtos.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +30,10 @@ public class UserMapperImpl implements UserMappper {
 
 	public UserResponseDto getResponseDto(User user) {
 		return modelMapper.map(user, UserResponseDto.class);
+	}
+
+	public List<UserResponseDto> getResponseDtos(Iterable<User> entities) {
+		return StreamSupport.stream(entities.spliterator(), false).map(entity -> getResponseDto(entity))
+				.collect(Collectors.toList());
 	}
 }

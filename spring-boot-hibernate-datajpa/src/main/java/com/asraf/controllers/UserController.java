@@ -1,5 +1,6 @@
 package com.asraf.controllers;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,9 @@ public class UserController {
 
 	@GetMapping("")
 	@ResponseBody
-	public ResponseEntity<Iterable<User>> getAll() {
-		return ResponseEntity.ok(this.userService.getAll());
+	public ResponseEntity<List<UserResponseDto>> getAll() {
+		List<UserResponseDto> response = userMappper.getResponseDtos(this.userService.getAll());
+		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping("/get-by-email/{email}")
