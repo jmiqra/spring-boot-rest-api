@@ -52,9 +52,8 @@ public class UserController {
 	@PostMapping("")
 	@ResponseBody
 	public ResponseEntity<Object> create(@RequestBody UserRequestDto requestDto) {
-		User user = null;
 		try {
-			user = new User(requestDto.getEmail(), requestDto.getName());
+			User user = modelMapper.map(requestDto, User.class);
 			userService.save(user);
 			return ResponseEntity.ok(user);
 		} catch (Exception ex) {
