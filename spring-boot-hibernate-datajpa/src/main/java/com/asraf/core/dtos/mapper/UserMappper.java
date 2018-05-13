@@ -9,7 +9,7 @@ import com.asraf.core.entities.User;
 public interface UserMappper {
 	User getEntityForCreate(UserRequestDto requestDto);
 
-	User getEntityForUpdate(Long id, UserRequestDto requestDto);
+	void loadEntity(UserRequestDto requestDto, User user);
 
 	UserResponseDto getResponseDto(User user);
 

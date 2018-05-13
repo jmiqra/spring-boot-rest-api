@@ -82,7 +82,7 @@ public class UserController {
 	public ResponseEntity<Object> update(@PathVariable long id, @RequestBody UserRequestDto requestDto) {
 		try {
 			User user = userService.getById(id);
-			user = userMappper.getEntityForUpdate(id, requestDto);
+			userMappper.loadEntity(requestDto, user);
 			userService.save(user);
 			return ResponseEntity.ok(user);
 		} catch (NoSuchElementException nseex) {
