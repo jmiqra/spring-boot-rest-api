@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public abstract class BaseResponseDto {
-
+	private Long id;
 }
