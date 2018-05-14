@@ -8,15 +8,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Table(name = "users")
 @Data
-public class User {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class User extends BaseEntity {
 
 	@NotNull
 	private String email;
