@@ -18,7 +18,7 @@ public class UserMapperImpl implements UserMappper {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	public User getEntityForCreate(UserRequestDto requestDto) {
+	public User getEntity(UserRequestDto requestDto) {
 		return modelMapper.map(requestDto, User.class);
 	}
 

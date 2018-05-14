@@ -54,7 +54,7 @@ public class UserController {
 	@ResponseBody
 	public ResponseEntity<Object> create(@RequestBody UserRequestDto requestDto) {
 		try {
-			User user = userMappper.getEntityForCreate(requestDto);
+			User user = userMappper.getEntity(requestDto);
 			userService.save(user);
 			return ResponseEntity.ok(user);
 		} catch (Exception ex) {
