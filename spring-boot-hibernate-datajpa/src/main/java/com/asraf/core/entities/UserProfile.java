@@ -24,7 +24,7 @@ public class UserProfile extends BaseEntity {
 	@NotNull
 	private String phoneNumber;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@MapsId
 	private User user;
 

@@ -22,7 +22,7 @@ public class UserVerification extends BaseEntity {
 	@NotNull
 	private String creationTime;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@NotNull
 	private User user;
 }

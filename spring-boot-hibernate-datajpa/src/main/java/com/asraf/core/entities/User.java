@@ -26,7 +26,7 @@ public class User extends BaseEntity {
 	@NotNull
 	private String name;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<UserVerification> userVerifications = new ArrayList<>();
 
 }
