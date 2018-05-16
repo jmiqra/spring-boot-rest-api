@@ -2,6 +2,9 @@ package com.asraf.core.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+
 import com.asraf.core.entities.User;
 import com.asraf.core.models.search.UserSearch;
 
@@ -20,5 +23,7 @@ public interface UserService {
 	List<User> getByNameContains(String name);
 
 	List<User> getBySearchCrud(UserSearch searchItem);
+
+	Slice<User> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable);
 	
 }

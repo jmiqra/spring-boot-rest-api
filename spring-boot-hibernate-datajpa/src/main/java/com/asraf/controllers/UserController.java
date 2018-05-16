@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,10 +69,25 @@ public class UserController {
 
 	@GetMapping("/search-crud")
 	@ResponseBody
-	public ResponseEntity<List<UserResponseDto>> getBySearch(UserSearch searchItem) {
+	public ResponseEntity<List<UserResponseDto>> getBySearchCrud(UserSearch searchItem) {
 		try {
 			List<User> users = userService.getBySearchCrud(searchItem);
 			return ResponseEntity.ok(userMappper.getResponseDtos(users));
+		} catch (Exception ex) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@GetMapping("/search-crud-pageable")
+	@ResponseBody
+	public ResponseEntity<Slice<User>> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable) {
+		try {
+			Sort sort = Sort.unsorted();
+			sort = sort.and(Sort.by(Direction.ASC, "name"));
+			sort = sort.and(Sort.by(Direction.DESC, "email"));
+			PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+			Slice<User> users = userService.getBySearchCrudPageable(searchItem, pageRequest);
+			return ResponseEntity.ok(users);
 		} catch (Exception ex) {
 			return ResponseEntity.notFound().build();
 		}

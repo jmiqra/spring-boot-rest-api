@@ -3,6 +3,8 @@ package com.asraf.persistence.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +46,10 @@ public class UserServiceImpl implements UserService {
 	
 	public List<User> getBySearchCrud(UserSearch searchItem) {
 		return userRepository.findByNameOrEmail(searchItem.getName(), searchItem.getEmail());
+	}
+	
+	public Slice<User> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable) {
+		return userRepository.findByNameContainsOrEmailContainsAllIgnoreCase(searchItem.getName(), searchItem.getEmail(), pageable);
 	}
 	
 }
