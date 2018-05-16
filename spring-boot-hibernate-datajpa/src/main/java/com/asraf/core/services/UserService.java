@@ -3,6 +3,7 @@ package com.asraf.core.services;
 import java.util.List;
 
 import com.asraf.core.entities.User;
+import com.asraf.core.models.search.UserSearch;
 
 public interface UserService {
 
@@ -18,4 +19,6 @@ public interface UserService {
 
 	List<User> getByNameContains(String name);
 
+	List<User> getBySearchCrud(UserSearch searchItem);
+	
 }

@@ -21,4 +21,7 @@ public interface UserRepositoryCrud extends PagingAndSortingRepository<User, Lon
 
 	@Query("select u from User u where u.name like %?1% order by name")
     List<User> findByNameContains(String name);
+	
+	List<User> findByNameOrEmail(String name, String email);
+	
 }

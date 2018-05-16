@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.asraf.core.entities.User;
+import com.asraf.core.models.search.UserSearch;
 import com.asraf.core.repositories.UserRepository;
 import com.asraf.core.services.UserService;
 
@@ -39,6 +40,10 @@ public class UserServiceImpl implements UserService {
 
 	public List<User> getByNameContains(String name) {
 		return userRepository.findByNameContains(name);
+	}
+	
+	public List<User> getBySearchCrud(UserSearch searchItem) {
+		return userRepository.findByNameOrEmail(searchItem.getName(), searchItem.getEmail());
 	}
 	
 }

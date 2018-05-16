@@ -20,6 +20,7 @@ import com.asraf.core.dtos.mapper.UserMappper;
 import com.asraf.core.dtos.request.UserRequestDto;
 import com.asraf.core.dtos.response.UserResponseDto;
 import com.asraf.core.entities.User;
+import com.asraf.core.models.search.UserSearch;
 import com.asraf.core.services.UserService;
 
 @RestController
@@ -55,6 +56,17 @@ public class UserController {
 	public ResponseEntity<List<UserResponseDto>> getByName(@PathVariable String name) {
 		try {
 			List<User> users = userService.getByNameContains(name);
+			return ResponseEntity.ok(userMappper.getResponseDtos(users));
+		} catch (Exception ex) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@GetMapping("/search-crud")
+	@ResponseBody
+	public ResponseEntity<List<UserResponseDto>> getBySearch(UserSearch searchItem) {
+		try {
+			List<User> users = userService.getBySearchCrud(searchItem);
 			return ResponseEntity.ok(userMappper.getResponseDtos(users));
 		} catch (Exception ex) {
 			return ResponseEntity.notFound().build();
