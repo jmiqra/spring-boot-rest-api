@@ -1,13 +1,15 @@
 package com.asraf.core.repositories;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.asraf.core.entities.User;
 
 @Transactional
-public interface UserRepositoryCrud extends CrudRepository<User, Long> {
+public interface UserRepositoryCrud extends PagingAndSortingRepository<User, Long> {
 
 	/**
 	 * Retrieves an user by its email.
@@ -17,4 +19,6 @@ public interface UserRepositoryCrud extends CrudRepository<User, Long> {
 	 */
 	public User findByEmail(String email);
 
+	@Query("select u from User u where u.name like %?1% order by name")
+    List<User> findByNameContains(String name);
 }

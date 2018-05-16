@@ -1,5 +1,6 @@
 package com.asraf.persistence.dtos.mapper;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -7,11 +8,13 @@ import java.util.stream.StreamSupport;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.asraf.core.dtos.mapper.DtoMapper;
 import com.asraf.core.dtos.request.BaseRequestDto;
 import com.asraf.core.dtos.response.BaseResponseDto;
 import com.asraf.core.entities.BaseEntity;
 
-public abstract class DtoMapperImpl<TEntity extends BaseEntity, TRequestDto extends BaseRequestDto, TResponseDto extends BaseResponseDto> {
+public abstract class DtoMapperImpl<TEntity extends BaseEntity, TRequestDto extends BaseRequestDto, TResponseDto extends BaseResponseDto>
+		implements DtoMapper<TEntity, TRequestDto, TResponseDto> {
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -40,4 +43,9 @@ public abstract class DtoMapperImpl<TEntity extends BaseEntity, TRequestDto exte
 		return StreamSupport.stream(entities.spliterator(), false).map(entity -> getResponseDto(entity))
 				.collect(Collectors.toList());
 	}
+
+	public List<TResponseDto> getResponseDtos(Collection<TEntity> entities) {
+		return entities.stream().map(entity -> getResponseDto(entity)).collect(Collectors.toList());
+	}
+
 }

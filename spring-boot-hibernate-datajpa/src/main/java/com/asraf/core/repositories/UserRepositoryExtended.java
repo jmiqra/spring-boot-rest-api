@@ -1,6 +1,6 @@
 package com.asraf.core.repositories;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface UserRepositoryExtended {

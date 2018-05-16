@@ -1,5 +1,6 @@
 package com.asraf.core.dtos.mapper;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.asraf.core.dtos.request.BaseRequestDto;
@@ -15,5 +16,7 @@ public interface DtoMapper<TEntity extends BaseEntity, TRequestDto extends BaseR
 	TResponseDto getResponseDto(TEntity entity);
 
 	List<TResponseDto> getResponseDtos(Iterable<TEntity> entities);
+
+	List<TResponseDto> getResponseDtos(Collection<TEntity> entities);
 
 }

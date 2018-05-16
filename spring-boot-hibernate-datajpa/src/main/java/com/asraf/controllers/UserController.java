@@ -50,6 +50,17 @@ public class UserController {
 		}
 	}
 
+	@GetMapping("/get-by-name/{name}")
+	@ResponseBody
+	public ResponseEntity<List<UserResponseDto>> getByName(@PathVariable String name) {
+		try {
+			List<User> users = userService.getByNameContains(name);
+			return ResponseEntity.ok(userMappper.getResponseDtos(users));
+		} catch (Exception ex) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 	@PostMapping("")
 	@ResponseBody
 	public ResponseEntity<Object> create(@RequestBody UserRequestDto requestDto) {
