@@ -2,8 +2,8 @@ package com.asraf.core.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,7 @@ public interface UserRepositoryCrud extends PagingAndSortingRepository<User, Lon
 	List<User> findByNameOrEmail(String name, String email);
 
 	// Page<User> findAll(Pageable pageRequest);
-	Slice<User> findByNameContainsOrEmailContainsAllIgnoreCase(String name, String email, Pageable pageRequest);
+	Page<User> findByNameContainsOrEmailContainsAllIgnoreCase(String name, String email, Pageable pageRequest);
 
 	// @Query("SELECT t FROM Todo t WHERE " + "LOWER(t.title) LIKE
 	// LOWER(CONCAT('%',:searchTerm, '%')) OR "
