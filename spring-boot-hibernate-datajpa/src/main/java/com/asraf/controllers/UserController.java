@@ -36,14 +36,12 @@ public class UserController {
 	private UserMappper userMappper;
 
 	@GetMapping("")
-	@ResponseBody
 	public ResponseEntity<List<UserResponseDto>> getAll() {
 		List<UserResponseDto> response = userMappper.getResponseDtos(this.userService.getAll());
 		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping("/get-by-email/{email}")
-	@ResponseBody
 	public ResponseEntity<UserResponseDto> getByEmail(@PathVariable String email) {
 		try {
 			User user = userService.getByEmail(email);
@@ -54,7 +52,6 @@ public class UserController {
 	}
 
 	@GetMapping("/get-by-name/{name}")
-	@ResponseBody
 	public ResponseEntity<List<UserResponseDto>> getByName(@PathVariable String name) {
 		try {
 			List<User> users = userService.getByNameContains(name);
@@ -65,7 +62,6 @@ public class UserController {
 	}
 
 	@GetMapping("/search-crud")
-	@ResponseBody
 	public ResponseEntity<List<UserResponseDto>> getBySearchCrud(UserSearch searchItem) {
 		try {
 			List<User> users = userService.getBySearchCrud(searchItem);
@@ -82,7 +78,6 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/search-crud-pageable")
-	@ResponseBody
 	public ResponseEntity<Page<User>> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable) {
 		try {
 			Page<User> users = userService.getBySearchCrudPageable(searchItem, pageable);
@@ -93,7 +88,6 @@ public class UserController {
 	}
 
 	@PostMapping("")
-	@ResponseBody
 	public ResponseEntity<Object> create(@RequestBody UserRequestDto requestDto) {
 		try {
 			User user = userMappper.getEntity(requestDto);
@@ -105,7 +99,6 @@ public class UserController {
 	}
 
 	@DeleteMapping("/{id}")
-	@ResponseBody
 	public ResponseEntity<Object> delete(@PathVariable long id) {
 		try {
 			User user = userService.getById(id);
@@ -120,7 +113,6 @@ public class UserController {
 	}
 
 	@PutMapping("/{id}")
-	@ResponseBody
 	public ResponseEntity<Object> update(@PathVariable long id, @RequestBody UserRequestDto requestDto) {
 		try {
 			User user = userService.getById(id);
