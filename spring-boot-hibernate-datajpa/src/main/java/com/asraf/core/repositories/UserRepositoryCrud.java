@@ -26,7 +26,7 @@ public interface UserRepositoryCrud extends PagingAndSortingRepository<User, Lon
 
 	List<User> findByNameOrEmail(String name, String email);
 
-	// Page<User> findAll(Pageable pageRequest);
+	// Slice<User> findAll(Pageable pageRequest);
 	Page<User> findByNameContainsOrEmailContainsAllIgnoreCase(String name, String email, Pageable pageRequest);
 
 	// @Query("SELECT t FROM Todo t WHERE " + "LOWER(t.title) LIKE
