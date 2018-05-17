@@ -5,7 +5,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import javax.annotation.PostConstruct;
+
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.asraf.core.dtos.mapper.DtoMapper;
@@ -22,9 +26,17 @@ public abstract class DtoMapperImpl<TEntity extends BaseEntity, TRequestDto exte
 	private Class<TEntity> tEntityType;
 	private Class<TResponseDto> tResponseDtoType;
 
+	protected PropertyMap<TRequestDto, TEntity> requestToEntityPropertyMap;
+	protected PropertyMap<TEntity, TResponseDto> entityToResponsePropertyMap;
+
 	protected DtoMapperImpl(Class<TEntity> entityType, Class<TResponseDto> responseDtoType) {
 		this.tEntityType = entityType;
 		this.tResponseDtoType = responseDtoType;
+	}
+
+	@PostConstruct
+	private void init() {
+		this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 	}
 
 	public TEntity getEntity(TRequestDto requestDto) {
@@ -48,4 +60,12 @@ public abstract class DtoMapperImpl<TEntity extends BaseEntity, TRequestDto exte
 		return entities.stream().map(entity -> getResponseDto(entity)).collect(Collectors.toList());
 	}
 
+	protected void addAllMappings() {
+		if (this.requestToEntityPropertyMap != null) {
+			this.modelMapper.addMappings(this.requestToEntityPropertyMap);
+		}
+		if (this.entityToResponsePropertyMap != null) {
+			this.modelMapper.addMappings(this.entityToResponsePropertyMap);
+		}
+	}
 }

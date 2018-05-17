@@ -11,6 +11,6 @@ public class UserVerificationRequestDto extends BaseRequestDto {
 
 	private String verificationCode;
 
-	private String creationTime;
+	private Long userId;
 
 }

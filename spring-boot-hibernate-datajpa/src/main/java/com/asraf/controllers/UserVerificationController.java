@@ -42,7 +42,7 @@ public class UserVerificationController {
 		try {
 			UserVerification userVerification = userVerificationMappper.getEntity(requestDto);
 			userVerificationService.save(userVerification);
-			return ResponseEntity.ok(userVerification);
+			return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
 		} catch (Exception ex) {
 			return ResponseEntity.badRequest().body("Error creating the userVerification: " + ex.toString());
 		}
@@ -53,7 +53,7 @@ public class UserVerificationController {
 		try {
 			UserVerification userVerification = userVerificationService.getById(id);
 			userVerificationService.delete(userVerification);
-			return ResponseEntity.ok(userVerification);
+			return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
 		} catch (NoSuchElementException nseex) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception ex) {
@@ -68,7 +68,7 @@ public class UserVerificationController {
 			UserVerification userVerification = userVerificationService.getById(id);
 			userVerificationMappper.loadEntity(requestDto, userVerification);
 			userVerificationService.save(userVerification);
-			return ResponseEntity.ok(userVerification);
+			return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
 		} catch (NoSuchElementException nseex) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception ex) {

@@ -1,5 +1,7 @@
 package com.asraf.core.dtos.response;
 
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,6 +13,6 @@ public class UserVerificationResponseDto extends BaseResponseDto {
 
 	private String verificationCode;
 
-	private String creationTime;
+	private Date creationTime;
 
 }

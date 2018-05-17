@@ -1,5 +1,7 @@
 package com.asraf.core.entities;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -20,7 +22,7 @@ public class UserVerification extends BaseEntity {
 	private String verificationCode;
 
 	@NotNull
-	private String creationTime;
+	private Date creationTime;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@NotNull
