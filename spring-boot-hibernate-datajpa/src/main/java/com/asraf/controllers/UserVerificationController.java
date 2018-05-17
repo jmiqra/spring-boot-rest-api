@@ -33,8 +33,22 @@ public class UserVerificationController {
 
 	@GetMapping("")
 	public ResponseEntity<List<UserVerificationResponseDto>> getAll() {
-		List<UserVerificationResponseDto> response = userVerificationMappper.getResponseDtos(this.userVerificationService.getAll());
+		List<UserVerificationResponseDto> response = userVerificationMappper
+				.getResponseDtos(this.userVerificationService.getAll());
 		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Object> getById(@PathVariable long id) {
+		try {
+			UserVerification userVerification = userVerificationService.getById(id);
+			return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
+		} catch (NoSuchElementException nseex) {
+			return ResponseEntity.notFound().build();
+		} catch (Exception ex) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error deleting the userVerification: " + ex.toString());
+		}
 	}
 
 	@PostMapping("")

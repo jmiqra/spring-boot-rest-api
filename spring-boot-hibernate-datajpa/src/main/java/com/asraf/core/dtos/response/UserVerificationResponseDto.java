@@ -15,4 +15,6 @@ public class UserVerificationResponseDto extends BaseResponseDto {
 
 	private Date creationTime;
 
+	private UserResponseDto User;
+	
 }
