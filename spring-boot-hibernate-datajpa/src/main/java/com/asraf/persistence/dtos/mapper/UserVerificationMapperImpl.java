@@ -2,9 +2,9 @@ package com.asraf.persistence.dtos.mapper;
 
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
-
+import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.asraf.core.dtos.mapper.UserVerificationMappper;
@@ -17,8 +17,9 @@ public class UserVerificationMapperImpl
 		extends DtoMapperImpl<UserVerification, UserVerificationRequestDto, UserVerificationResponseDto>
 		implements UserVerificationMappper {
 
-	public UserVerificationMapperImpl() {
-		super(UserVerification.class, UserVerificationResponseDto.class);
+	@Autowired
+	public UserVerificationMapperImpl(ModelMapper modelMapper) {
+		super(UserVerification.class, UserVerificationResponseDto.class, modelMapper);
 	
 		super.requestToEntityPropertyMap = new PropertyMap<UserVerificationRequestDto, UserVerification>() {
 			protected void configure() {
@@ -28,11 +29,6 @@ public class UserVerificationMapperImpl
 			}
 		};
 		
-	}
-
-	@PostConstruct
-	private void init() {
-		addAllMappings();
 	}
 	
 	public UserVerification getEntity(UserVerificationRequestDto requestDto) {
