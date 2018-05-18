@@ -22,16 +22,12 @@ public abstract class DtoMapperImpl<TEntity extends BaseEntity, TRequestDto exte
 	private Class<TEntity> tEntityType;
 	private Class<TResponseDto> tResponseDtoType;
 
-	protected PropertyMap<TRequestDto, TEntity> requestToEntityPropertyMap;
-	protected PropertyMap<TEntity, TResponseDto> entityToResponsePropertyMap;
-
 	protected DtoMapperImpl(Class<TEntity> entityType, Class<TResponseDto> responseDtoType, ModelMapper modelMapper) {
 		this.tEntityType = entityType;
 		this.tResponseDtoType = responseDtoType;
 		this.modelMapper = modelMapper;
 
 		this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		addAllMappings();
 	}
 
 	public TEntity getEntity(TRequestDto requestDto) {
@@ -55,12 +51,27 @@ public abstract class DtoMapperImpl<TEntity extends BaseEntity, TRequestDto exte
 		return entities.stream().map(entity -> getResponseDto(entity)).collect(Collectors.toList());
 	}
 
-	private void addAllMappings() {
-		if (this.requestToEntityPropertyMap != null) {
-			this.modelMapper.addMappings(this.requestToEntityPropertyMap);
+	protected DtoMapperImpl<TEntity, TRequestDto, TResponseDto> setRequestToEntityPropertyMap(
+			PropertyMap<TRequestDto, TEntity> requestToEntityPropertyMap) {
+		if (requestToEntityPropertyMap != null) {
+			this.modelMapper.addMappings(requestToEntityPropertyMap);
 		}
-		if (this.entityToResponsePropertyMap != null) {
-			this.modelMapper.addMappings(this.entityToResponsePropertyMap);
+		return this;
+	}
+
+	protected DtoMapperImpl<TEntity, TRequestDto, TResponseDto> setEntityToResponsePropertyMap(
+			PropertyMap<TEntity, TResponseDto> entityToResponsePropertyMap) {
+		if (entityToResponsePropertyMap != null) {
+			this.modelMapper.addMappings(entityToResponsePropertyMap);
 		}
+		return this;
+	}
+
+	protected <TSource, TDestination> DtoMapperImpl<TEntity, TRequestDto, TResponseDto> setNestedObjectPropertyMap(
+			PropertyMap<TSource, TDestination> nestedObjectPropertyMap) {
+		if (nestedObjectPropertyMap != null) {
+			this.modelMapper.addMappings(nestedObjectPropertyMap);
+		}
+		return this;
 	}
 }

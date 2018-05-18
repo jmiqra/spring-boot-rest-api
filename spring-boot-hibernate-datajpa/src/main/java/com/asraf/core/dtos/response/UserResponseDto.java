@@ -1,5 +1,7 @@
 package com.asraf.core.dtos.response;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -10,4 +12,5 @@ import lombok.ToString;
 public class UserResponseDto extends BaseResponseDto {
 	private String email;
 	private String name;
+	private List<UserVerificationResponseDto> userVerifications;
 }
