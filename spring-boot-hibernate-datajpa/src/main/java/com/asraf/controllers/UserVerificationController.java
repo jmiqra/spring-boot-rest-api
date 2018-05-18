@@ -25,12 +25,16 @@ import com.asraf.core.services.UserVerificationService;
 @RequestMapping("/user-verifications")
 public class UserVerificationController {
 
-	@Autowired
 	private UserVerificationService userVerificationService;
-
-	@Autowired
 	private UserVerificationMappper userVerificationMappper;
 
+	@Autowired
+	public UserVerificationController(UserVerificationService userVerificationService, 
+			UserVerificationMappper userVerificationMappper) {
+		this.userVerificationMappper = userVerificationMappper;
+		this.userVerificationService = userVerificationService;
+	}
+	
 	@GetMapping("")
 	public ResponseEntity<List<UserVerificationResponseDto>> getAll() {
 		List<UserVerificationResponseDto> response = userVerificationMappper

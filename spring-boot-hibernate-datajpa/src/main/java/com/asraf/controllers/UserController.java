@@ -28,12 +28,16 @@ import com.asraf.core.services.UserService;
 @RequestMapping("/users")
 public class UserController {
 
-	@Autowired
 	private UserService userService;
-
-	@Autowired
 	private UserMappper userMappper;
 
+	@Autowired
+	public UserController(UserService userService, 
+			UserMappper userMappper) {
+		this.userMappper = userMappper;
+		this.userService = userService;
+	}
+	
 	@GetMapping("")
 	public ResponseEntity<List<UserResponseDto>> getAll() {
 		List<UserResponseDto> response = userMappper.getResponseDtos(this.userService.getAll());

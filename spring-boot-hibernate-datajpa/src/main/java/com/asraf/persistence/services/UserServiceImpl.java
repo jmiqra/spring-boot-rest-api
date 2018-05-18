@@ -17,8 +17,12 @@ import com.asraf.core.services.UserService;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	public UserServiceImpl(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 
 	public User save(User user) {
 		return userRepository.save(user);

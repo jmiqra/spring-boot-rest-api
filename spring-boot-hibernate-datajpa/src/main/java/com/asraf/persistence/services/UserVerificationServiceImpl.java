@@ -12,8 +12,12 @@ import com.asraf.core.services.UserVerificationService;
 @Transactional
 public class UserVerificationServiceImpl implements UserVerificationService {
 
-	@Autowired
 	private UserVerificationRepository userVerificationRepository;
+
+	@Autowired
+	public UserVerificationServiceImpl(UserVerificationRepository userVerificationRepository) {
+		this.userVerificationRepository = userVerificationRepository;
+	}
 
 	public UserVerification save(UserVerification userVerification) {
 		return userVerificationRepository.save(userVerification);
