@@ -1,14 +1,12 @@
 package com.asraf.controllers;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,12 +32,11 @@ public class UserController {
 	private UserMappper userMappper;
 
 	@Autowired
-	public UserController(UserService userService, 
-			UserMappper userMappper) {
+	public UserController(UserService userService, UserMappper userMappper) {
 		this.userMappper = userMappper;
 		this.userService = userService;
 	}
-	
+
 	@GetMapping("")
 	public ResponseEntity<List<UserResponseDto>> getAll() {
 		List<UserResponseDto> response = userMappper.getResponseDtos(this.userService.getAll());
@@ -48,32 +45,23 @@ public class UserController {
 
 	@GetMapping("/get-by-email/{email}")
 	public ResponseEntity<UserResponseDto> getByEmail(@PathVariable String email) {
-		try {
-			User user = userService.getByEmail(email);
-			return ResponseEntity.ok(userMappper.getResponseDto(user));
-		} catch (Exception ex) {
+		User user = userService.getByEmail(email);
+		if (user == null) {
 			return ResponseEntity.notFound().build();
 		}
+		return ResponseEntity.ok(userMappper.getResponseDto(user));
 	}
 
 	@GetMapping("/get-by-name/{name}")
 	public ResponseEntity<List<UserResponseDto>> getByName(@PathVariable String name) {
-		try {
-			List<User> users = userService.getByNameContains(name);
-			return ResponseEntity.ok(userMappper.getResponseDtos(users));
-		} catch (Exception ex) {
-			return ResponseEntity.notFound().build();
-		}
+		List<User> users = userService.getByNameContains(name);
+		return ResponseEntity.ok(userMappper.getResponseDtos(users));
 	}
 
 	@GetMapping("/search-crud")
 	public ResponseEntity<List<UserResponseDto>> getBySearchCrud(UserSearch searchItem) {
-		try {
-			List<User> users = userService.getBySearchCrud(searchItem);
-			return ResponseEntity.ok(userMappper.getResponseDtos(users));
-		} catch (Exception ex) {
-			return ResponseEntity.notFound().build();
-		}
+		List<User> users = userService.getBySearchCrud(searchItem);
+		return ResponseEntity.ok(userMappper.getResponseDtos(users));
 	}
 
 	/**
@@ -83,53 +71,31 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/search-crud-pageable")
-	public ResponseEntity<Page<User>> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable) {
-		try {
-			Page<User> users = userService.getBySearchCrudPageable(searchItem, pageable);
-			return ResponseEntity.ok(users);
-		} catch (Exception ex) {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<Page<UserResponseDto>> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable) {
+		Page<User> pagedUser = userService.getBySearchCrudPageable(searchItem, pageable);
+		return ResponseEntity.ok(userMappper.getResponseDtos(pagedUser));
 	}
 
 	@PostMapping("")
 	public ResponseEntity<Object> create(@Valid @RequestBody UserRequestDto requestDto) {
-		try {
-			User user = userMappper.getEntity(requestDto);
-			userService.save(user);
-			return ResponseEntity.ok(user);
-		} catch (Exception ex) {
-			return ResponseEntity.badRequest().body("Error creating the user: " + ex.toString());
-		}
+		User user = userMappper.getEntity(requestDto);
+		userService.save(user);
+		return ResponseEntity.ok(user);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Object> delete(@PathVariable long id) {
-		try {
-			User user = userService.getById(id);
-			userService.delete(user);
-			return ResponseEntity.ok(user);
-		} catch (NoSuchElementException nseex) {
-			return ResponseEntity.notFound().build();
-		} catch (Exception ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error deleting the user: " + ex.toString());
-		}
+		User user = userService.getById(id);
+		userService.delete(user);
+		return ResponseEntity.ok(user);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> update(@PathVariable long id, @Valid @RequestBody UserRequestDto requestDto) {
-		try {
-			User user = userService.getById(id);
-			userMappper.loadEntity(requestDto, user);
-			userService.save(user);
-			return ResponseEntity.ok(user);
-		} catch (NoSuchElementException nseex) {
-			return ResponseEntity.notFound().build();
-		} catch (Exception ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error updating the user: " + ex.toString());
-		}
+		User user = userService.getById(id);
+		userMappper.loadEntity(requestDto, user);
+		userService.save(user);
+		return ResponseEntity.ok(user);
 	}
 
 }
