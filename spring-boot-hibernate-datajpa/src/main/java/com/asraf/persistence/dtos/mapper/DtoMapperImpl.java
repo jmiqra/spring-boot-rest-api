@@ -8,6 +8,8 @@ import java.util.stream.StreamSupport;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import com.asraf.core.dtos.mapper.DtoMapper;
 import com.asraf.core.dtos.request.BaseRequestDto;
@@ -49,6 +51,12 @@ public abstract class DtoMapperImpl<TEntity extends BaseEntity, TRequestDto exte
 
 	public List<TResponseDto> getResponseDtos(Collection<TEntity> entities) {
 		return entities.stream().map(entity -> getResponseDto(entity)).collect(Collectors.toList());
+	}
+
+	public Page<TResponseDto> getResponseDtos(Page<TEntity> pageEntity) {
+		Page<TResponseDto> pagedResponseDto = new PageImpl<TResponseDto>(this.getResponseDtos(pageEntity.getContent()),
+				pageEntity.getPageable(), pageEntity.getTotalElements());
+		return pagedResponseDto;
 	}
 
 	protected DtoMapperImpl<TEntity, TRequestDto, TResponseDto> setRequestToEntityPropertyMap(
