@@ -3,6 +3,8 @@ package com.asraf.controllers;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -91,7 +93,7 @@ public class UserController {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<Object> create(@RequestBody UserRequestDto requestDto) {
+	public ResponseEntity<Object> create(@Valid @RequestBody UserRequestDto requestDto) {
 		try {
 			User user = userMappper.getEntity(requestDto);
 			userService.save(user);
@@ -116,7 +118,7 @@ public class UserController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> update(@PathVariable long id, @RequestBody UserRequestDto requestDto) {
+	public ResponseEntity<Object> update(@PathVariable long id, @Valid @RequestBody UserRequestDto requestDto) {
 		try {
 			User user = userService.getById(id);
 			userMappper.loadEntity(requestDto, user);

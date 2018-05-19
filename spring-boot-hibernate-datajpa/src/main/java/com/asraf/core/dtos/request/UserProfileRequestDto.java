@@ -1,5 +1,7 @@
 package com.asraf.core.dtos.request;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -9,8 +11,10 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class UserProfileRequestDto extends BaseRequestDto {
 
+	@NotNull
 	private String address;
 
+	@NotNull
 	private String phoneNumber;
 
 }

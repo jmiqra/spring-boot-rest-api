@@ -3,6 +3,8 @@ package com.asraf.controllers;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -60,7 +62,7 @@ public class UserProfileController {
 	}
 
 	@PostMapping("users/{userId}/user-profiles")
-	public ResponseEntity<Object> create(@PathVariable long userId, @RequestBody UserProfileRequestDto requestDto) {
+	public ResponseEntity<Object> create(@PathVariable long userId, @Valid @RequestBody UserProfileRequestDto requestDto) {
 		try {
 			User user = this.userService.getById(userId);
 			UserProfile userProfile = userProfileMappper.getEntity(requestDto, user);
@@ -91,7 +93,7 @@ public class UserProfileController {
 	}
 
 	@PutMapping("/user-profiles/{id}")
-	public ResponseEntity<Object> update(@PathVariable long id, @RequestBody UserProfileRequestDto requestDto) {
+	public ResponseEntity<Object> update(@PathVariable long id, @Valid @RequestBody UserProfileRequestDto requestDto) {
 		try {
 			UserProfile userProfile = userProfileService.getById(id);
 			userProfileMappper.loadEntity(requestDto, userProfile);

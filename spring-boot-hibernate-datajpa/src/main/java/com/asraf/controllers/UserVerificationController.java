@@ -3,6 +3,8 @@ package com.asraf.controllers;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,7 +58,7 @@ public class UserVerificationController {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<Object> create(@RequestBody UserVerificationRequestDto requestDto) {
+	public ResponseEntity<Object> create(@Valid @RequestBody UserVerificationRequestDto requestDto) {
 		try {
 			UserVerification userVerification = userVerificationMappper.getEntity(requestDto);
 			userVerificationService.save(userVerification);
@@ -81,7 +83,7 @@ public class UserVerificationController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> update(@PathVariable long id, @RequestBody UserVerificationRequestDto requestDto) {
+	public ResponseEntity<Object> update(@PathVariable long id, @Valid @RequestBody UserVerificationRequestDto requestDto) {
 		try {
 			UserVerification userVerification = userVerificationService.getById(id);
 			userVerificationMappper.loadEntity(requestDto, userVerification);
