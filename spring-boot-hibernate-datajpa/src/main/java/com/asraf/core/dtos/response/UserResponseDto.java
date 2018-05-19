@@ -12,5 +12,7 @@ import lombok.ToString;
 public class UserResponseDto extends BaseResponseDto {
 	private String email;
 	private String name;
+	// TODO: unable to show usreProfile in response because user entity has not userProfile
+	// private UserProfileResponseDto userProfile;
 	private List<UserVerificationResponseDto> userVerifications;
 }
