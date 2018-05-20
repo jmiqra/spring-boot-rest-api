@@ -47,7 +47,7 @@ public class UserProfileController {
 	}
 
 	@GetMapping("/user-profiles/{id}")
-	public ResponseEntity<UserProfileResponseDto> getById(@PathVariable long id) {
+	public ResponseEntity<UserProfileResponseDto> getById(@PathVariable long id) throws EntityNotFoundException {
 		UserProfile userProfile = userProfileService.getById(id);
 		return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
 	}
@@ -62,7 +62,7 @@ public class UserProfileController {
 	}
 
 	@DeleteMapping("/user-profiles/{id}")
-	public ResponseEntity<UserProfileResponseDto> delete(@PathVariable long id) {
+	public ResponseEntity<UserProfileResponseDto> delete(@PathVariable long id) throws EntityNotFoundException {
 		UserProfile userProfile = userProfileService.getById(id);
 		// TODO: stop removing parent-user
 		userProfileService.delete(userProfile);
@@ -71,7 +71,7 @@ public class UserProfileController {
 
 	@PutMapping("/user-profiles/{id}")
 	public ResponseEntity<UserProfileResponseDto> update(@PathVariable long id,
-			@Valid @RequestBody UserProfileRequestDto requestDto) {
+			@Valid @RequestBody UserProfileRequestDto requestDto) throws EntityNotFoundException {
 		UserProfile userProfile = userProfileService.getById(id);
 		userProfileMappper.loadEntity(requestDto, userProfile);
 		userProfileService.save(userProfile);

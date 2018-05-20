@@ -1,6 +1,7 @@
 package com.asraf.core.services;
 
 import com.asraf.core.entities.UserVerification;
+import com.asraf.exceptions.EntityNotFoundException;
 
 public interface UserVerificationService {
 
@@ -8,7 +9,7 @@ public interface UserVerificationService {
 
 	void delete(UserVerification userVerification);
 
-	UserVerification getById(Long id);
+	UserVerification getById(Long id) throws EntityNotFoundException;
 
 	Iterable<UserVerification> getAll();
 

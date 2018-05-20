@@ -20,6 +20,7 @@ import com.asraf.core.dtos.request.UserVerificationRequestDto;
 import com.asraf.core.dtos.response.UserVerificationResponseDto;
 import com.asraf.core.entities.UserVerification;
 import com.asraf.core.services.UserVerificationService;
+import com.asraf.exceptions.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/user-verifications")
@@ -29,12 +30,12 @@ public class UserVerificationController {
 	private UserVerificationMappper userVerificationMappper;
 
 	@Autowired
-	public UserVerificationController(UserVerificationService userVerificationService, 
+	public UserVerificationController(UserVerificationService userVerificationService,
 			UserVerificationMappper userVerificationMappper) {
 		this.userVerificationMappper = userVerificationMappper;
 		this.userVerificationService = userVerificationService;
 	}
-	
+
 	@GetMapping("")
 	public ResponseEntity<List<UserVerificationResponseDto>> getAll() {
 		List<UserVerificationResponseDto> response = userVerificationMappper
@@ -43,27 +44,29 @@ public class UserVerificationController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<UserVerificationResponseDto> getById(@PathVariable long id) {
+	public ResponseEntity<UserVerificationResponseDto> getById(@PathVariable long id) throws EntityNotFoundException {
 		UserVerification userVerification = userVerificationService.getById(id);
 		return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
 	}
 
 	@PostMapping("")
-	public ResponseEntity<UserVerificationResponseDto> create(@Valid @RequestBody UserVerificationRequestDto requestDto) {
+	public ResponseEntity<UserVerificationResponseDto> create(
+			@Valid @RequestBody UserVerificationRequestDto requestDto) {
 		UserVerification userVerification = userVerificationMappper.getEntity(requestDto);
 		userVerificationService.save(userVerification);
 		return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<UserVerificationResponseDto> delete(@PathVariable long id) {
+	public ResponseEntity<UserVerificationResponseDto> delete(@PathVariable long id) throws EntityNotFoundException {
 		UserVerification userVerification = userVerificationService.getById(id);
 		userVerificationService.delete(userVerification);
 		return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<UserVerificationResponseDto> update(@PathVariable long id, @Valid @RequestBody UserVerificationRequestDto requestDto) {
+	public ResponseEntity<UserVerificationResponseDto> update(@PathVariable long id,
+			@Valid @RequestBody UserVerificationRequestDto requestDto) throws EntityNotFoundException {
 		UserVerification userVerification = userVerificationService.getById(id);
 		userVerificationMappper.loadEntity(requestDto, userVerification);
 		userVerificationService.save(userVerification);

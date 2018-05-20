@@ -36,11 +36,7 @@ public class UserServiceImpl implements UserService {
 
 	public User getById(Long id) throws EntityNotFoundException {
 		try {
-			User user = userRepository.findById(id).get();
-			if (user == null) {
-				throw new EntityNotFoundException(User.class, "id", id.toString());
-			}
-			return user;
+			return userRepository.findById(id).get();
 		} catch (NoSuchElementException nseex) {
 			throw new EntityNotFoundException(User.class, "id", id.toString());
 		}
@@ -51,15 +47,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User getByEmail(String email) throws EntityNotFoundException {
-		try {
-			User user = userRepository.findByEmail(email);
-			if (user == null) {
-				throw new EntityNotFoundException(User.class, "email", email.toString());
-			}
-			return user;
-		} catch (NoSuchElementException nseex) {
+		User user = userRepository.findByEmail(email);
+		if (user == null) {
 			throw new EntityNotFoundException(User.class, "email", email.toString());
 		}
+		return user;
 	}
 
 	public List<User> getByNameContains(String name) {
