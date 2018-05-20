@@ -2,6 +2,7 @@ package com.asraf.controllers.advices;
 
 import java.util.NoSuchElementException;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,12 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	protected ResponseEntity<Object> handleNotFound(RuntimeException ex, WebRequest request) {
 		String bodyOfResponse = "Resource not found";
 		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
+
+	@ExceptionHandler(value = { DataIntegrityViolationException.class })
+	protected ResponseEntity<Object> handleDataIntegrityViolation(RuntimeException ex, WebRequest request) {
+		String bodyOfResponse = "Resource has been created";
+		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
 	}
 
 	@ExceptionHandler(value = { Exception.class })
