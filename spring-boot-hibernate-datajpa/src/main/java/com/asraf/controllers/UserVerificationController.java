@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,40 +36,39 @@ public class UserVerificationController {
 	}
 
 	@GetMapping("")
-	public ResponseEntity<List<UserVerificationResponseDto>> getAll() {
+	public List<UserVerificationResponseDto> getAll() {
 		List<UserVerificationResponseDto> response = userVerificationMappper
 				.getResponseDtos(this.userVerificationService.getAll());
-		return ResponseEntity.ok(response);
+		return response;
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<UserVerificationResponseDto> getById(@PathVariable long id) throws EntityNotFoundException {
+	public UserVerificationResponseDto getById(@PathVariable long id) throws EntityNotFoundException {
 		UserVerification userVerification = userVerificationService.getById(id);
-		return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
+		return userVerificationMappper.getResponseDto(userVerification);
 	}
 
 	@PostMapping("")
-	public ResponseEntity<UserVerificationResponseDto> create(
-			@Valid @RequestBody UserVerificationRequestDto requestDto) {
+	public UserVerificationResponseDto create(@Valid @RequestBody UserVerificationRequestDto requestDto) {
 		UserVerification userVerification = userVerificationMappper.getEntity(requestDto);
 		userVerificationService.save(userVerification);
-		return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
+		return userVerificationMappper.getResponseDto(userVerification);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<UserVerificationResponseDto> delete(@PathVariable long id) throws EntityNotFoundException {
+	public UserVerificationResponseDto delete(@PathVariable long id) throws EntityNotFoundException {
 		UserVerification userVerification = userVerificationService.getById(id);
 		userVerificationService.delete(userVerification);
-		return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
+		return userVerificationMappper.getResponseDto(userVerification);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<UserVerificationResponseDto> update(@PathVariable long id,
+	public UserVerificationResponseDto update(@PathVariable long id,
 			@Valid @RequestBody UserVerificationRequestDto requestDto) throws EntityNotFoundException {
 		UserVerification userVerification = userVerificationService.getById(id);
 		userVerificationMappper.loadEntity(requestDto, userVerification);
 		userVerificationService.save(userVerification);
-		return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
+		return userVerificationMappper.getResponseDto(userVerification);
 	}
 
 }

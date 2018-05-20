@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,41 +40,41 @@ public class UserProfileController {
 	}
 
 	@GetMapping("/user-profiles")
-	public ResponseEntity<List<UserProfileResponseDto>> getAll() {
+	public List<UserProfileResponseDto> getAll() {
 		List<UserProfileResponseDto> response = userProfileMappper.getResponseDtos(this.userProfileService.getAll());
-		return ResponseEntity.ok(response);
+		return response;
 	}
 
 	@GetMapping("/user-profiles/{id}")
-	public ResponseEntity<UserProfileResponseDto> getById(@PathVariable long id) throws EntityNotFoundException {
+	public UserProfileResponseDto getById(@PathVariable long id) throws EntityNotFoundException {
 		UserProfile userProfile = userProfileService.getById(id);
-		return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
+		return userProfileMappper.getResponseDto(userProfile);
 	}
 
 	@PostMapping("users/{userId}/user-profiles")
-	public ResponseEntity<UserProfileResponseDto> create(@PathVariable long userId,
+	public UserProfileResponseDto create(@PathVariable long userId,
 			@Valid @RequestBody UserProfileRequestDto requestDto) throws EntityNotFoundException {
 		User user = this.userService.getById(userId);
 		UserProfile userProfile = userProfileMappper.getEntity(requestDto, user);
 		userProfileService.save(userProfile);
-		return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
+		return userProfileMappper.getResponseDto(userProfile);
 	}
 
 	@DeleteMapping("/user-profiles/{id}")
-	public ResponseEntity<UserProfileResponseDto> delete(@PathVariable long id) throws EntityNotFoundException {
+	public UserProfileResponseDto delete(@PathVariable long id) throws EntityNotFoundException {
 		UserProfile userProfile = userProfileService.getById(id);
 		// TODO: stop removing parent-user
 		userProfileService.delete(userProfile);
-		return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
+		return userProfileMappper.getResponseDto(userProfile);
 	}
 
 	@PutMapping("/user-profiles/{id}")
-	public ResponseEntity<UserProfileResponseDto> update(@PathVariable long id,
-			@Valid @RequestBody UserProfileRequestDto requestDto) throws EntityNotFoundException {
+	public UserProfileResponseDto update(@PathVariable long id, @Valid @RequestBody UserProfileRequestDto requestDto)
+			throws EntityNotFoundException {
 		UserProfile userProfile = userProfileService.getById(id);
 		userProfileMappper.loadEntity(requestDto, userProfile);
 		userProfileService.save(userProfile);
-		return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
+		return userProfileMappper.getResponseDto(userProfile);
 	}
 
 }

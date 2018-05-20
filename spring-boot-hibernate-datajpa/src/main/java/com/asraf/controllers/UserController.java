@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,30 +38,27 @@ public class UserController {
 	}
 
 	@GetMapping("")
-	public ResponseEntity<List<UserResponseDto>> getAll() {
+	public List<UserResponseDto> getAll() {
 		List<UserResponseDto> response = userMappper.getResponseDtos(this.userService.getAll());
-		return ResponseEntity.ok(response);
+		return response;
 	}
 
 	@GetMapping("/get-by-email/{email}")
-	public ResponseEntity<UserResponseDto> getByEmail(@PathVariable String email) throws EntityNotFoundException {
+	public UserResponseDto getByEmail(@PathVariable String email) throws EntityNotFoundException {
 		User user = userService.getByEmail(email);
-		if (user == null) {
-			return ResponseEntity.notFound().build();
-		}
-		return ResponseEntity.ok(userMappper.getResponseDto(user));
+		return userMappper.getResponseDto(user);
 	}
 
 	@GetMapping("/get-by-name/{name}")
-	public ResponseEntity<List<UserResponseDto>> getByName(@PathVariable String name) {
+	public List<UserResponseDto> getByName(@PathVariable String name) {
 		List<User> users = userService.getByNameContains(name);
-		return ResponseEntity.ok(userMappper.getResponseDtos(users));
+		return userMappper.getResponseDtos(users);
 	}
 
 	@GetMapping("/search-crud")
-	public ResponseEntity<List<UserResponseDto>> getBySearchCrud(UserSearch searchItem) {
+	public List<UserResponseDto> getBySearchCrud(UserSearch searchItem) {
 		List<User> users = userService.getBySearchCrud(searchItem);
-		return ResponseEntity.ok(userMappper.getResponseDtos(users));
+		return userMappper.getResponseDtos(users);
 	}
 
 	/**
@@ -72,32 +68,32 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/search-crud-pageable")
-	public ResponseEntity<Page<UserResponseDto>> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable) {
+	public Page<UserResponseDto> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable) {
 		Page<User> pagedUser = userService.getBySearchCrudPageable(searchItem, pageable);
-		return ResponseEntity.ok(userMappper.getResponseDtos(pagedUser));
+		return userMappper.getResponseDtos(pagedUser);
 	}
 
 	@PostMapping("")
-	public ResponseEntity<UserResponseDto> create(@Valid @RequestBody UserRequestDto requestDto) {
+	public UserResponseDto create(@Valid @RequestBody UserRequestDto requestDto) {
 		User user = userMappper.getEntity(requestDto);
 		userService.save(user);
-		return ResponseEntity.ok(userMappper.getResponseDto(user));
+		return userMappper.getResponseDto(user);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<UserResponseDto> delete(@PathVariable long id) throws EntityNotFoundException {
+	public UserResponseDto delete(@PathVariable long id) throws EntityNotFoundException {
 		User user = userService.getById(id);
 		userService.delete(user);
-		return ResponseEntity.ok(userMappper.getResponseDto(user));
+		return userMappper.getResponseDto(user);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<UserResponseDto> update(@PathVariable long id, @Valid @RequestBody UserRequestDto requestDto)
+	public UserResponseDto update(@PathVariable long id, @Valid @RequestBody UserRequestDto requestDto)
 			throws EntityNotFoundException {
 		User user = userService.getById(id);
 		userMappper.loadEntity(requestDto, user);
 		userService.save(user);
-		return ResponseEntity.ok(userMappper.getResponseDto(user));
+		return userMappper.getResponseDto(user);
 	}
 
 }
