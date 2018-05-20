@@ -1,13 +1,10 @@
 package com.asraf.controllers;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,62 +46,35 @@ public class UserProfileController {
 	}
 
 	@GetMapping("/user-profiles/{id}")
-	public ResponseEntity<Object> getById(@PathVariable long id) {
-		try {
-			UserProfile userProfile = userProfileService.getById(id);
-			return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
-		} catch (NoSuchElementException nseex) {
-			return ResponseEntity.notFound().build();
-		} catch (Exception ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error deleting the userProfile: " + ex.toString());
-		}
+	public ResponseEntity<UserProfileResponseDto> getById(@PathVariable long id) {
+		UserProfile userProfile = userProfileService.getById(id);
+		return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
 	}
 
 	@PostMapping("users/{userId}/user-profiles")
-	public ResponseEntity<Object> create(@PathVariable long userId, @Valid @RequestBody UserProfileRequestDto requestDto) {
-		try {
-			User user = this.userService.getById(userId);
-			UserProfile userProfile = userProfileMappper.getEntity(requestDto, user);
-			userProfileService.save(userProfile);
-			return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
-		} catch (NoSuchElementException nseex) {
-			return ResponseEntity.notFound().build();
-		} catch (DataIntegrityViolationException divex) {
-			return ResponseEntity.badRequest().body("Profile has been created. Please update it.");
-		} catch (Exception ex) {
-			return ResponseEntity.badRequest().body("Error creating the userProfile: " + ex.toString());
-		}
+	public ResponseEntity<UserProfileResponseDto> create(@PathVariable long userId,
+			@Valid @RequestBody UserProfileRequestDto requestDto) {
+		User user = this.userService.getById(userId);
+		UserProfile userProfile = userProfileMappper.getEntity(requestDto, user);
+		userProfileService.save(userProfile);
+		return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
 	}
 
 	@DeleteMapping("/user-profiles/{id}")
-	public ResponseEntity<Object> delete(@PathVariable long id) {
-		try {
-			UserProfile userProfile = userProfileService.getById(id);
-			// TODO: stop removing parent-user
-			userProfileService.delete(userProfile);
-			return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
-		} catch (NoSuchElementException nseex) {
-			return ResponseEntity.notFound().build();
-		} catch (Exception ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error deleting the userProfile: " + ex.toString());
-		}
+	public ResponseEntity<UserProfileResponseDto> delete(@PathVariable long id) {
+		UserProfile userProfile = userProfileService.getById(id);
+		// TODO: stop removing parent-user
+		userProfileService.delete(userProfile);
+		return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
 	}
 
 	@PutMapping("/user-profiles/{id}")
-	public ResponseEntity<Object> update(@PathVariable long id, @Valid @RequestBody UserProfileRequestDto requestDto) {
-		try {
-			UserProfile userProfile = userProfileService.getById(id);
-			userProfileMappper.loadEntity(requestDto, userProfile);
-			userProfileService.save(userProfile);
-			return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
-		} catch (NoSuchElementException nseex) {
-			return ResponseEntity.notFound().build();
-		} catch (Exception ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error updating the userProfile: " + ex.toString());
-		}
+	public ResponseEntity<UserProfileResponseDto> update(@PathVariable long id,
+			@Valid @RequestBody UserProfileRequestDto requestDto) {
+		UserProfile userProfile = userProfileService.getById(id);
+		userProfileMappper.loadEntity(requestDto, userProfile);
+		userProfileService.save(userProfile);
+		return ResponseEntity.ok(userProfileMappper.getResponseDto(userProfile));
 	}
 
 }

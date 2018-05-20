@@ -77,25 +77,25 @@ public class UserController {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<Object> create(@Valid @RequestBody UserRequestDto requestDto) {
+	public ResponseEntity<UserResponseDto> create(@Valid @RequestBody UserRequestDto requestDto) {
 		User user = userMappper.getEntity(requestDto);
 		userService.save(user);
-		return ResponseEntity.ok(user);
+		return ResponseEntity.ok(userMappper.getResponseDto(user));
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Object> delete(@PathVariable long id) {
+	public ResponseEntity<UserResponseDto> delete(@PathVariable long id) {
 		User user = userService.getById(id);
 		userService.delete(user);
-		return ResponseEntity.ok(user);
+		return ResponseEntity.ok(userMappper.getResponseDto(user));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> update(@PathVariable long id, @Valid @RequestBody UserRequestDto requestDto) {
+	public ResponseEntity<UserResponseDto> update(@PathVariable long id, @Valid @RequestBody UserRequestDto requestDto) {
 		User user = userService.getById(id);
 		userMappper.loadEntity(requestDto, user);
 		userService.save(user);
-		return ResponseEntity.ok(user);
+		return ResponseEntity.ok(userMappper.getResponseDto(user));
 	}
 
 }

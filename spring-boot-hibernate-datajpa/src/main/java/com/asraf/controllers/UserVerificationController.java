@@ -1,12 +1,10 @@
 package com.asraf.controllers;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,56 +43,31 @@ public class UserVerificationController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Object> getById(@PathVariable long id) {
-		try {
-			UserVerification userVerification = userVerificationService.getById(id);
-			return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
-		} catch (NoSuchElementException nseex) {
-			return ResponseEntity.notFound().build();
-		} catch (Exception ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error deleting the userVerification: " + ex.toString());
-		}
+	public ResponseEntity<UserVerificationResponseDto> getById(@PathVariable long id) {
+		UserVerification userVerification = userVerificationService.getById(id);
+		return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
 	}
 
 	@PostMapping("")
-	public ResponseEntity<Object> create(@Valid @RequestBody UserVerificationRequestDto requestDto) {
-		try {
-			UserVerification userVerification = userVerificationMappper.getEntity(requestDto);
-			userVerificationService.save(userVerification);
-			return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
-		} catch (Exception ex) {
-			return ResponseEntity.badRequest().body("Error creating the userVerification: " + ex.toString());
-		}
+	public ResponseEntity<UserVerificationResponseDto> create(@Valid @RequestBody UserVerificationRequestDto requestDto) {
+		UserVerification userVerification = userVerificationMappper.getEntity(requestDto);
+		userVerificationService.save(userVerification);
+		return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Object> delete(@PathVariable long id) {
-		try {
-			UserVerification userVerification = userVerificationService.getById(id);
-			userVerificationService.delete(userVerification);
-			return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
-		} catch (NoSuchElementException nseex) {
-			return ResponseEntity.notFound().build();
-		} catch (Exception ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error deleting the userVerification: " + ex.toString());
-		}
+	public ResponseEntity<UserVerificationResponseDto> delete(@PathVariable long id) {
+		UserVerification userVerification = userVerificationService.getById(id);
+		userVerificationService.delete(userVerification);
+		return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> update(@PathVariable long id, @Valid @RequestBody UserVerificationRequestDto requestDto) {
-		try {
-			UserVerification userVerification = userVerificationService.getById(id);
-			userVerificationMappper.loadEntity(requestDto, userVerification);
-			userVerificationService.save(userVerification);
-			return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
-		} catch (NoSuchElementException nseex) {
-			return ResponseEntity.notFound().build();
-		} catch (Exception ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Error updating the userVerification: " + ex.toString());
-		}
+	public ResponseEntity<UserVerificationResponseDto> update(@PathVariable long id, @Valid @RequestBody UserVerificationRequestDto requestDto) {
+		UserVerification userVerification = userVerificationService.getById(id);
+		userVerificationMappper.loadEntity(requestDto, userVerification);
+		userVerificationService.save(userVerification);
+		return ResponseEntity.ok(userVerificationMappper.getResponseDto(userVerification));
 	}
 
 }
