@@ -22,6 +22,7 @@ import com.asraf.core.entities.User;
 import com.asraf.core.entities.UserProfile;
 import com.asraf.core.services.UserProfileService;
 import com.asraf.core.services.UserService;
+import com.asraf.exceptions.EntityNotFoundException;
 
 @RestController
 @RequestMapping("")
@@ -53,7 +54,7 @@ public class UserProfileController {
 
 	@PostMapping("users/{userId}/user-profiles")
 	public ResponseEntity<UserProfileResponseDto> create(@PathVariable long userId,
-			@Valid @RequestBody UserProfileRequestDto requestDto) {
+			@Valid @RequestBody UserProfileRequestDto requestDto) throws EntityNotFoundException {
 		User user = this.userService.getById(userId);
 		UserProfile userProfile = userProfileMappper.getEntity(requestDto, user);
 		userProfileService.save(userProfile);

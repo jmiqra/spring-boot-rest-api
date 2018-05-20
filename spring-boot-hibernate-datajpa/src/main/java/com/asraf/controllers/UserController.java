@@ -23,6 +23,7 @@ import com.asraf.core.dtos.response.UserResponseDto;
 import com.asraf.core.entities.User;
 import com.asraf.core.models.search.UserSearch;
 import com.asraf.core.services.UserService;
+import com.asraf.exceptions.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/users")
@@ -44,7 +45,7 @@ public class UserController {
 	}
 
 	@GetMapping("/get-by-email/{email}")
-	public ResponseEntity<UserResponseDto> getByEmail(@PathVariable String email) {
+	public ResponseEntity<UserResponseDto> getByEmail(@PathVariable String email) throws EntityNotFoundException {
 		User user = userService.getByEmail(email);
 		if (user == null) {
 			return ResponseEntity.notFound().build();
@@ -84,14 +85,15 @@ public class UserController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<UserResponseDto> delete(@PathVariable long id) {
+	public ResponseEntity<UserResponseDto> delete(@PathVariable long id) throws EntityNotFoundException {
 		User user = userService.getById(id);
 		userService.delete(user);
 		return ResponseEntity.ok(userMappper.getResponseDto(user));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<UserResponseDto> update(@PathVariable long id, @Valid @RequestBody UserRequestDto requestDto) {
+	public ResponseEntity<UserResponseDto> update(@PathVariable long id, @Valid @RequestBody UserRequestDto requestDto)
+			throws EntityNotFoundException {
 		User user = userService.getById(id);
 		userMappper.loadEntity(requestDto, user);
 		userService.save(user);

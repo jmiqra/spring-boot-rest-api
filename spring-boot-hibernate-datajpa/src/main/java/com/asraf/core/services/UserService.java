@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.asraf.core.entities.User;
 import com.asraf.core.models.search.UserSearch;
+import com.asraf.exceptions.EntityNotFoundException;
 
 public interface UserService {
 
@@ -14,11 +15,11 @@ public interface UserService {
 
 	void delete(User user);
 
-	User getById(Long id);
+	User getById(Long id) throws EntityNotFoundException;
 
 	Iterable<User> getAll();
 
-	User getByEmail(String email);
+	User getByEmail(String email) throws EntityNotFoundException;
 
 	List<User> getByNameContains(String name);
 
