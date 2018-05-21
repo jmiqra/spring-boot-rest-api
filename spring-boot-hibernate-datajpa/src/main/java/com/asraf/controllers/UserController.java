@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asraf.core.dtos.mapper.UserMappper;
@@ -23,6 +25,7 @@ import com.asraf.core.entities.User;
 import com.asraf.core.models.search.UserSearch;
 import com.asraf.core.services.UserService;
 import com.asraf.exceptions.EntityNotFoundException;
+import com.querydsl.core.types.Predicate;
 
 @RestController
 @RequestMapping("/users")
@@ -71,6 +74,12 @@ public class UserController {
 	public Page<UserResponseDto> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable) {
 		Page<User> pagedUser = userService.getBySearchCrudPageable(searchItem, pageable);
 		return userMappper.getResponseDtos(pagedUser);
+	}
+
+	@GetMapping("/query")
+	public List<UserResponseDto> getByQuery(@RequestParam(value = "search") String search) {
+		Iterable<User> users = userService.getByQuery(search);
+		return userMappper.getResponseDtos(users);
 	}
 
 	@PostMapping("")

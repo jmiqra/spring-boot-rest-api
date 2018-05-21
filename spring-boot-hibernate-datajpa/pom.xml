@@ -86,7 +86,10 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			
+
+			<!-- add below two lines to STS.ini or eclipse.ini if needed -->
+			<!-- -vm -->
+			<!-- C:\Program Files\Java\jdk1.8.0_171\bin\javaw.exe -->
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
