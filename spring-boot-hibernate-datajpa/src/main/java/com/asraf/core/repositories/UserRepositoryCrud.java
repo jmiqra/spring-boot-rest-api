@@ -5,13 +5,14 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.asraf.core.entities.User;
 
 @Transactional
-public interface UserRepositoryCrud extends PagingAndSortingRepository<User, Long> {
+public interface UserRepositoryCrud extends PagingAndSortingRepository<User, Long>, QuerydslPredicateExecutor<User> {
 
 	/**
 	 * Retrieves an user by its email.
