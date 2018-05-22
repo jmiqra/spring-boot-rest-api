@@ -78,6 +78,12 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.25</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
+
+		<dependency>
+			<groupId>cz.jirutka.rsql</groupId>
+			<artifactId>rsql-parser</artifactId>
+			<version>2.1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

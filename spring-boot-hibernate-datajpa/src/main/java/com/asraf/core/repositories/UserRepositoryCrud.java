@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
@@ -19,7 +20,7 @@ import com.querydsl.core.types.dsl.StringPath;
 
 @Transactional
 public interface UserRepositoryCrud extends PagingAndSortingRepository<User, Long>, QuerydslPredicateExecutor<User>,
-		QuerydslBinderCustomizer<QUser> {
+		QuerydslBinderCustomizer<QUser>, JpaSpecificationExecutor<User> {
 
 	@Override
 	default public void customize(QuerydslBindings bindings, QUser root) {

@@ -80,17 +80,18 @@ public class UserController {
 
 	@GetMapping("/query")
 	public List<UserResponseDto> getByQuery(@RequestParam(value = "search") String search) {
-		// Iterable<User> users = userService.getByQuery(search);
+		 Iterable<User> users = userService.getByQuery(search);
 
-		List<SearchCriteria> params = new ArrayList<SearchCriteria>();
-		if (search != null) {
-			Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
-			Matcher matcher = pattern.matcher(search + ",");
-			while (matcher.find()) {
-				params.add(new SearchCriteria(matcher.group(1), matcher.group(2), matcher.group(3)));
-			}
-		}
-		List<User> users = userService.searchUser(params);
+		// List<SearchCriteria> params = new ArrayList<SearchCriteria>();
+		// if (search != null) {
+		// Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
+		// Matcher matcher = pattern.matcher(search + ",");
+		// while (matcher.find()) {
+		// params.add(new SearchCriteria(matcher.group(1), matcher.group(2),
+		// matcher.group(3)));
+		// }
+		// }
+		// List<User> users = userService.searchUser(params);
 
 		return userMappper.getResponseDtos(users);
 	}
