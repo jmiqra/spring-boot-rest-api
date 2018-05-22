@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import com.asraf.core.entities.User;
 import com.asraf.core.models.search.UserSearch;
 import com.asraf.exceptions.EntityNotFoundException;
-import com.asraf.util.SearchCriteria;
 
 public interface UserService {
 
@@ -30,6 +29,4 @@ public interface UserService {
 	
 	Iterable<User> getByQuery(String search);
 
-	List<User> searchUser(List<SearchCriteria> params);
-	
 }

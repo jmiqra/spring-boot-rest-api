@@ -11,6 +11,11 @@ import com.asraf.core.entities.User;
 
 public class UserSpecification implements Specification<User> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private SpecSearchCriteria criteria;
 
 	public UserSpecification(final SpecSearchCriteria criteria) {
