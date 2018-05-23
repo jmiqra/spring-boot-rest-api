@@ -57,6 +57,13 @@ public class UserController {
 		List<User> users = userService.getByNameContains(name);
 		return userMappper.getResponseDtos(users);
 	}
+	
+	//Changes Iqra
+	@GetMapping("/get-by-id/{id}")
+	public UserResponseDto getById(@PathVariable long id) throws EntityNotFoundException {
+		User user = userService.getById(id);
+		return userMappper.getResponseDto(user);
+	}
 
 	@GetMapping("/search-crud")
 	public List<UserResponseDto> getBySearchCrud(UserSearch searchItem) {
