@@ -1,7 +1,11 @@
 package com.asraf.core.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
+
+import com.asraf.enums.Gender;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,6 +26,7 @@ public class Student extends BaseEntity{
 	private int age;
 	
 	@NotNull
-	private String gender;
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
 	
 }

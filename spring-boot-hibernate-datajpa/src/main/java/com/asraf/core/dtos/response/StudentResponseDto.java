@@ -1,6 +1,8 @@
 package com.asraf.core.dtos.response;
 
 
+import com.asraf.enums.Gender;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -14,6 +16,6 @@ public class StudentResponseDto extends BaseResponseDto{
 	
 	private int age;
 	
-	private String gender;
+	private Gender gender;
 
 }
