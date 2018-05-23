@@ -73,12 +73,7 @@
 			<artifactId>querydsl-jpa</artifactId>
 			<version>4.2.1</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.25</version><!--$NO-MVN-MAN-VER$ -->
-		</dependency>
-
+		
 		<dependency>
 			<groupId>cz.jirutka.rsql</groupId>
 			<artifactId>rsql-parser</artifactId>

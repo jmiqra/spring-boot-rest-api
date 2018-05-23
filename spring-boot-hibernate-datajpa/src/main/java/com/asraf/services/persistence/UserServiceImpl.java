@@ -14,10 +14,14 @@ import com.asraf.entities.User;
 import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.models.search.UserSearch;
 import com.asraf.repositories.UserRepository;
+import com.asraf.rsql.CustomRsqlVisitor;
 import com.asraf.services.UserService;
 import com.asraf.specifications.CriteriaParser;
 import com.asraf.specifications.GenericSpecificationsBuilder;
 import com.asraf.specifications.UserSpecification;
+
+import cz.jirutka.rsql.parser.RSQLParser;
+import cz.jirutka.rsql.parser.ast.Node;
 
 @Service
 @Transactional
@@ -73,16 +77,19 @@ public class UserServiceImpl implements UserService {
 
 	// TODO: implement pageable
 	public Iterable<User> getByQuery(String search) {
-		Specification<User> spec = resolveSpecificationFromInfixExpr(search);
-        Iterable<User> users = userRepository.findAll(spec);
+		// Specification<User> spec = resolveSpecificationFromInfixExpr(search);
+		// Iterable<User> users = userRepository.findAll(spec);
+		Node rootNode = new RSQLParser().parse(search);
+		Specification<User> spec = rootNode.accept(new CustomRsqlVisitor<User>());
+		Iterable<User> users = userRepository.findAll(spec);
 		return users;
 	}
 
 	// TODO: send it to different class
 	protected Specification<User> resolveSpecificationFromInfixExpr(String searchParameters) {
-        CriteriaParser parser = new CriteriaParser();
-        GenericSpecificationsBuilder<User> specBuilder = new GenericSpecificationsBuilder<>();
-        return specBuilder.build(parser.parse(searchParameters), UserSpecification::new);
-    }
-	
+		CriteriaParser parser = new CriteriaParser();
+		GenericSpecificationsBuilder<User> specBuilder = new GenericSpecificationsBuilder<>();
+		return specBuilder.build(parser.parse(searchParameters), UserSpecification::new);
+	}
+
 }
