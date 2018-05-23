@@ -8,9 +8,7 @@ import org.springframework.stereotype.Component;
 import com.asraf.core.dtos.mapper.StudentMapper;
 import com.asraf.core.dtos.request.StudentRequestDto;
 import com.asraf.core.dtos.response.StudentResponseDto;
-import com.asraf.core.dtos.response.UserResponseDto;
 import com.asraf.core.entities.Student;
-import com.asraf.core.entities.User;
 
 @Component
 @Scope(value = "prototype")
