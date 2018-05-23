@@ -1,4 +1,4 @@
-package com.asraf.repositories.persistence;
+package com.asraf.specifications;
 
 
 import java.util.ArrayList;
@@ -12,9 +12,10 @@ import java.util.stream.Collectors;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 
-import com.asraf.util.SearchOperation;
+import com.asraf.entities.BaseEntity;
 
-public class GenericSpecificationsBuilder<U> {
+@SuppressWarnings("deprecation")
+public class GenericSpecificationsBuilder<TEntity extends BaseEntity> {
 
     private final List<SpecSearchCriteria> params;
 
@@ -22,11 +23,11 @@ public class GenericSpecificationsBuilder<U> {
         this.params = new ArrayList<>();
     }
 
-    public final GenericSpecificationsBuilder<U> with(final String key, final String operation, final Object value, final String prefix, final String suffix) {
+    public final GenericSpecificationsBuilder<TEntity> with(final String key, final String operation, final Object value, final String prefix, final String suffix) {
         return with(null, key, operation, value, prefix, suffix);
     }
 
-    public final GenericSpecificationsBuilder<U> with(final String precedenceIndicator, final String key, final String operation, final Object value, final String prefix, final String suffix) {
+    public final GenericSpecificationsBuilder<TEntity> with(final String precedenceIndicator, final String key, final String operation, final Object value, final String prefix, final String suffix) {
         SearchOperation op = SearchOperation.getSimpleOperation(operation.charAt(0));
         if (op != null) {
             if (op == SearchOperation.EQUALITY) // the operation may be complex operation
@@ -47,17 +48,17 @@ public class GenericSpecificationsBuilder<U> {
         return this;
     }
 
-    public Specification<U> build(Function<SpecSearchCriteria, Specification<U>> converter) {
+    public Specification<TEntity> build(Function<SpecSearchCriteria, Specification<TEntity>> converter) {
 
         if (params.size() == 0) {
             return null;
         }
 
-        final List<Specification<U>> specs = params.stream()
+        final List<Specification<TEntity>> specs = params.stream()
             .map(converter)
             .collect(Collectors.toCollection(ArrayList::new));
 
-        Specification<U> result = specs.get(0);
+        Specification<TEntity> result = specs.get(0);
 
         for (int idx = 1; idx < specs.size(); idx++) {
             result = params.get(idx)
@@ -70,9 +71,9 @@ public class GenericSpecificationsBuilder<U> {
         return result;
     }
 
-    public Specification<U> build(Deque<?> postFixedExprStack, Function<SpecSearchCriteria, Specification<U>> converter) {
+    public Specification<TEntity> build(Deque<?> postFixedExprStack, Function<SpecSearchCriteria, Specification<TEntity>> converter) {
 
-        Deque<Specification<U>> specStack = new LinkedList<>();
+        Deque<Specification<TEntity>> specStack = new LinkedList<>();
 
         Collections.reverse((List<?>) postFixedExprStack);
 
@@ -82,8 +83,8 @@ public class GenericSpecificationsBuilder<U> {
             if (!(mayBeOperand instanceof String)) {
                 specStack.push(converter.apply((SpecSearchCriteria) mayBeOperand));
             } else {
-                Specification<U> operand1 = specStack.pop();
-                Specification<U> operand2 = specStack.pop();
+                Specification<TEntity> operand1 = specStack.pop();
+                Specification<TEntity> operand2 = specStack.pop();
                 if (mayBeOperand.equals(SearchOperation.AND_OPERATOR))
                     specStack.push(Specifications.where(operand1)
                         .and(operand2));

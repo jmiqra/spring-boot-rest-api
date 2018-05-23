@@ -6,28 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
-import org.springframework.data.querydsl.binding.QuerydslBindings;
-import org.springframework.data.querydsl.binding.SingleValueBinding;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.asraf.entities.QUser;
 import com.asraf.entities.User;
-import com.querydsl.core.types.dsl.StringExpression;
-import com.querydsl.core.types.dsl.StringPath;
 
 @Transactional
-public interface UserRepositoryCrud extends PagingAndSortingRepository<User, Long>, QuerydslPredicateExecutor<User>,
-		QuerydslBinderCustomizer<QUser>, JpaSpecificationExecutor<User> {
-
-	@Override
-	default public void customize(QuerydslBindings bindings, QUser root) {
-		bindings.bind(String.class)
-				.first((SingleValueBinding<StringPath, String>) StringExpression::containsIgnoreCase);
-		bindings.excluding(root.email);
-	}
+public interface UserRepositoryCrud extends PagingAndSortingRepository<User, Long>, JpaSpecificationExecutor<User> {
 
 	/**
 	 * Retrieves an user by its email.

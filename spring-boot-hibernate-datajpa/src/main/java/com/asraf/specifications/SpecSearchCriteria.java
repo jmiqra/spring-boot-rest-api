@@ -1,6 +1,4 @@
-package com.asraf.repositories.persistence;
-
-import com.asraf.util.SearchOperation;
+package com.asraf.specifications;
 
 public class SpecSearchCriteria {
 

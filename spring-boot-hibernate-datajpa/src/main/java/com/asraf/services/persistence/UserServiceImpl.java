@@ -14,10 +14,10 @@ import com.asraf.entities.User;
 import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.models.search.UserSearch;
 import com.asraf.repositories.UserRepository;
-import com.asraf.repositories.persistence.GenericSpecificationsBuilder;
-import com.asraf.repositories.persistence.UserSpecification;
 import com.asraf.services.UserService;
-import com.asraf.util.CriteriaParser;
+import com.asraf.specifications.CriteriaParser;
+import com.asraf.specifications.GenericSpecificationsBuilder;
+import com.asraf.specifications.UserSpecification;
 
 @Service
 @Transactional
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
 	// TODO: implement pageable
 	public Iterable<User> getByQuery(String search) {
 		Specification<User> spec = resolveSpecificationFromInfixExpr(search);
-		Iterable<User> users = userRepository.findAll(spec);
+        Iterable<User> users = userRepository.findAll(spec);
 		return users;
 	}
 

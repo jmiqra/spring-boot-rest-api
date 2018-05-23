@@ -1,4 +1,4 @@
-package com.asraf.repositories.persistence;
+package com.asraf.specifications;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
