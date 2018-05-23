@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specifications;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class GenericRsqlSpecBuilder<T> {
 
     public Specifications<T> createSpecification(final Node node) {
