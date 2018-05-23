@@ -2,13 +2,18 @@ package com.asraf.persistence.services;
 
 import java.util.NoSuchElementException;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.asraf.core.entities.Session;
 import com.asraf.core.repositories.SessionRepository;
 import com.asraf.core.services.SessionService;
 import com.asraf.exceptions.EntityNotFoundException;
 
+@Service
+@Transactional
 public class SessionServiceImpl implements SessionService{
 	
 	private SessionRepository sessionRepository;
