@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.asraf.persistence.repositories.SpecSearchCriteria;
+import com.asraf.repositories.persistence.SpecSearchCriteria;
 import com.google.common.base.Joiner;
 
 public class CriteriaParser {

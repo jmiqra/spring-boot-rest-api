@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.asraf.core.dtos.mapper.UserVerificationMappper;
-import com.asraf.core.dtos.request.UserVerificationRequestDto;
-import com.asraf.core.dtos.response.UserVerificationResponseDto;
-import com.asraf.core.entities.UserVerification;
-import com.asraf.core.services.UserVerificationService;
+import com.asraf.dtos.mapper.UserVerificationMappper;
+import com.asraf.dtos.request.UserVerificationRequestDto;
+import com.asraf.dtos.response.UserVerificationResponseDto;
+import com.asraf.entities.UserVerification;
 import com.asraf.exceptions.EntityNotFoundException;
+import com.asraf.services.UserVerificationService;
 
 @RestController
 @RequestMapping("/user-verifications")

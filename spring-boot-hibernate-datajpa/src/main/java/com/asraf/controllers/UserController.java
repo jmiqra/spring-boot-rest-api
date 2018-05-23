@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.asraf.core.dtos.mapper.UserMappper;
-import com.asraf.core.dtos.request.UserRequestDto;
-import com.asraf.core.dtos.response.UserResponseDto;
-import com.asraf.core.entities.User;
-import com.asraf.core.models.search.UserSearch;
-import com.asraf.core.services.UserService;
+import com.asraf.dtos.mapper.UserMappper;
+import com.asraf.dtos.request.UserRequestDto;
+import com.asraf.dtos.response.UserResponseDto;
+import com.asraf.entities.User;
 import com.asraf.exceptions.EntityNotFoundException;
+import com.asraf.models.search.UserSearch;
+import com.asraf.services.UserService;
 
 @RestController
 @RequestMapping("/users")

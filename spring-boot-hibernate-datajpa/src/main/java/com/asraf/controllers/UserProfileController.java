@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.asraf.core.dtos.mapper.UserProfileMappper;
-import com.asraf.core.dtos.request.UserProfileRequestDto;
-import com.asraf.core.dtos.response.UserProfileResponseDto;
-import com.asraf.core.entities.User;
-import com.asraf.core.entities.UserProfile;
-import com.asraf.core.services.UserProfileService;
-import com.asraf.core.services.UserService;
+import com.asraf.dtos.mapper.UserProfileMappper;
+import com.asraf.dtos.request.UserProfileRequestDto;
+import com.asraf.dtos.response.UserProfileResponseDto;
+import com.asraf.entities.User;
+import com.asraf.entities.UserProfile;
 import com.asraf.exceptions.EntityNotFoundException;
+import com.asraf.services.UserProfileService;
+import com.asraf.services.UserService;
 
 @RestController
 @RequestMapping("")
