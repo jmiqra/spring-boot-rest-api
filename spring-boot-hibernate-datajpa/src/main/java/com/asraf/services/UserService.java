@@ -27,6 +27,6 @@ public interface UserService {
 
 	Page<User> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable);
 	
-	Iterable<User> getByQuery(String search);
+	Page<User> getByQuery(String search, Pageable pageable);
 
 }

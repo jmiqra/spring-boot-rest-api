@@ -72,11 +72,10 @@ public class UserServiceImpl implements UserService {
 				searchItem.getEmail(), pageable);
 	}
 
-	// TODO: implement pageable
-	public Iterable<User> getByQuery(String search) {
+	public Page<User> getByQuery(String search, Pageable pageable) {
 		Node rootNode = new RSQLParser().parse(search);
 		Specification<User> spec = rootNode.accept(new CustomRsqlVisitor<User>());
-		Iterable<User> users = userRepository.findAll(spec);
+		Page<User> users = userRepository.findAll(spec, pageable);
 		return users;
 	}
 

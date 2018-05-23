@@ -75,8 +75,8 @@ public class UserController {
 	}
 
 	@GetMapping("/query")
-	public List<UserResponseDto> getByQuery(@RequestParam(value = "search") String search) {
-		 Iterable<User> users = userService.getByQuery(search);
+	public Page<UserResponseDto> getByQuery(@RequestParam(value = "search") String search, Pageable pageable) {
+		Page<User> users = userService.getByQuery(search, pageable);
 		return userMappper.getResponseDtos(users);
 	}
 
