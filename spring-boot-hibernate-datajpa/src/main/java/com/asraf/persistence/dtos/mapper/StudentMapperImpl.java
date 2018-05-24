@@ -1,6 +1,7 @@
 package com.asraf.persistence.dtos.mapper;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,17 @@ public class StudentMapperImpl extends DtoMapperImpl<Student, StudentRequestDto,
 	@Autowired
 	public StudentMapperImpl(ModelMapper modelMapper) {
 		super(Student.class, StudentResponseDto.class, modelMapper);
+		
+		PropertyMap<StudentRequestDto, Student> requestToEntityPropertyMap = new PropertyMap<StudentRequestDto, Student>() {
+			protected void configure() {
+				map().getSession().setId(source.getSessionId());
+				// map().setCreationTime(new Date());
+				// using(convertMassToLarge).map(source.getMass()).setLarge(false);
+			}
+		};
+		
+		super.setRequestToEntityPropertyMap(requestToEntityPropertyMap);
+		
 	}
 	
 }

@@ -18,6 +18,6 @@ public class StudentResponseDto extends BaseResponseDto{
 	
 	private Gender gender;
 	
-	private SessionResponseDto SessionRDto;
+	//private SessionResponseDto SessionRDto;
 
 }
