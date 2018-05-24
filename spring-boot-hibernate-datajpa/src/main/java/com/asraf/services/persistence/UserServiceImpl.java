@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.asraf.entities.User;
 import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.models.search.UserSearch;
+import com.asraf.models.search.extended.UserWithVerificationSearch;
 import com.asraf.repositories.UserRepository;
 import com.asraf.rsql.CustomRsqlVisitor;
 import com.asraf.services.UserService;
@@ -70,6 +71,10 @@ public class UserServiceImpl implements UserService {
 	public Page<User> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable) {
 		return userRepository.findByNameContainsOrEmailContainsAllIgnoreCase(searchItem.getName(),
 				searchItem.getEmail(), pageable);
+	}
+
+	public Page<User> getBySearchIntoJoiningTablePageable(UserWithVerificationSearch searchItem, Pageable pageable) {
+		return userRepository.GetByUserWithVerificationSeach(searchItem, pageable);
 	}
 
 	public Page<User> getByQuery(String search, Pageable pageable) {

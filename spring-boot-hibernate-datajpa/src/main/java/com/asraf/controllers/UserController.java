@@ -23,6 +23,7 @@ import com.asraf.dtos.response.UserResponseDto;
 import com.asraf.entities.User;
 import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.models.search.UserSearch;
+import com.asraf.models.search.extended.UserWithVerificationSearch;
 import com.asraf.services.UserService;
 
 @RestController
@@ -72,6 +73,13 @@ public class UserController {
 	public Page<UserResponseDto> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable) {
 		Page<User> pagedUser = userService.getBySearchCrudPageable(searchItem, pageable);
 		return userMappper.getResponseDtos(pagedUser);
+	}
+
+	@GetMapping("/search-join-pageable")
+	public Object getBySearchJoinPageable(UserWithVerificationSearch searchItem, Pageable pageable) {
+//		Page<User> pagedUser = this.userService.getBySearchIntoJoiningTablePageable(searchItem, pageable);
+//		return userMappper.getResponseDtos(pagedUser);
+		return searchItem;
 	}
 
 	@GetMapping("/query")

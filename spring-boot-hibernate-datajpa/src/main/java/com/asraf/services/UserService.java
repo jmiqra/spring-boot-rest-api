@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import com.asraf.entities.User;
 import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.models.search.UserSearch;
+import com.asraf.models.search.extended.UserWithVerificationSearch;
 
 public interface UserService {
 
@@ -26,6 +27,8 @@ public interface UserService {
 	List<User> getBySearchCrud(UserSearch searchItem);
 
 	Page<User> getBySearchCrudPageable(UserSearch searchItem, Pageable pageable);
+	
+	Page<User> getBySearchIntoJoiningTablePageable(UserWithVerificationSearch searchItem, Pageable pageable);
 	
 	Page<User> getByQuery(String search, Pageable pageable);
 
