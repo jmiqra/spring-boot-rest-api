@@ -8,11 +8,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 
+import com.asraf.entities.BaseEntity;
 import com.querydsl.jpa.JPQLQuery;
 
 @NoRepositoryBean
-public interface ExtendedQueryDslJpaRepository<T, ID extends Serializable> 
-        extends JpaRepository<T, ID>, QuerydslPredicateExecutor<T> {
+public interface ExtendedQueryDslJpaRepository<TEntity extends BaseEntity, ID extends Serializable>
+		extends JpaRepository<TEntity, ID>, QuerydslPredicateExecutor<TEntity> {
 
-    <T1> Page<T1> findAll(JPQLQuery<?> jpqlQuery, Pageable pageable);
+	<T1> Page<T1> findAll(JPQLQuery<?> jpqlQuery, Pageable pageable);
 }

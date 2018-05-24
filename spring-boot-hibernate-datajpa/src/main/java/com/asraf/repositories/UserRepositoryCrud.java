@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.asraf.entities.User;
 
 @Transactional
-public interface UserRepositoryCrud extends PagingAndSortingRepository<User, Long>, JpaSpecificationExecutor<User> {
+public interface UserRepositoryCrud extends PagingAndSortingRepository<User, Long> {
 
 	/**
 	 * Retrieves an user by its email.
