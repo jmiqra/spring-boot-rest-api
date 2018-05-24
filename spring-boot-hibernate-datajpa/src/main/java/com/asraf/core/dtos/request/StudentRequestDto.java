@@ -30,4 +30,7 @@ public class StudentRequestDto extends BaseRequestDto{
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
+	
+	@NotNull
+	private Long sessionId;
 }

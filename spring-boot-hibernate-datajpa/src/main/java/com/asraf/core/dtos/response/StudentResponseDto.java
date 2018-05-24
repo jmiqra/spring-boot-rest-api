@@ -17,5 +17,7 @@ public class StudentResponseDto extends BaseResponseDto{
 	private int age;
 	
 	private Gender gender;
+	
+	private SessionResponseDto SessionRDto;
 
 }
