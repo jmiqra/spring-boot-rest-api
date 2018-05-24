@@ -27,7 +27,14 @@ public class StudentMapperImpl extends DtoMapperImpl<Student, StudentRequestDto,
 			}
 		};
 		
-		super.setRequestToEntityPropertyMap(requestToEntityPropertyMap);
+		PropertyMap<Student, StudentResponseDto> entityToResponsePropertyMap = new PropertyMap<Student, StudentResponseDto>() {
+			protected void configure() {
+				skip().getSession().setStudents(null);
+			}
+		};
+		
+		super.setRequestToEntityPropertyMap(requestToEntityPropertyMap)
+			.setEntityToResponsePropertyMap(entityToResponsePropertyMap);
 		
 	}
 	

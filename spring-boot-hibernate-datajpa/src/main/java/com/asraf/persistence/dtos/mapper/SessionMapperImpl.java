@@ -9,9 +9,7 @@ import org.springframework.stereotype.Component;
 import com.asraf.core.dtos.mapper.SessionMapper;
 import com.asraf.core.dtos.request.SessionRequestDto;
 import com.asraf.core.dtos.response.SessionResponseDto;
-import com.asraf.core.dtos.response.StudentResponseDto;
 import com.asraf.core.entities.Session;
-import com.asraf.core.entities.Student;
 
 @Component
 @Scope(value = "prototype")
@@ -21,13 +19,15 @@ public class SessionMapperImpl extends DtoMapperImpl<Session, SessionRequestDto,
 	public SessionMapperImpl(ModelMapper modelMapper) {
 		super(Session.class, SessionResponseDto.class, modelMapper);
 	
-//		PropertyMap<Student, StudentResponseDto> studentEntityToResponsePropertyMap = new PropertyMap<Student, StudentResponseDto>() {
-//			protected void configure() {
-//				skip().setSessionRDto(null);
-//			}
-//		};
-//	
-//		super.setNestedObjectPropertyMap(studentEntityToResponsePropertyMap);
+		PropertyMap<Session, SessionResponseDto> entityToResponsePropertyMap = new PropertyMap<Session, SessionResponseDto>() {
+			protected void configure() {
+				skip().setStudents(null);
+			}
+		};
+		
+		super.setEntityToResponsePropertyMap(entityToResponsePropertyMap);
+		
+		
 	}
 
 }
