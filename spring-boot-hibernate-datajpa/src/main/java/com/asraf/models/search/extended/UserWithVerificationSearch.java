@@ -15,7 +15,5 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class UserWithVerificationSearch extends UserSearch {
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
-	private LocalDate creationTimeFrom;
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
-	private LocalDate creationTimeTo;
+	private LocalDate creationTime;
 }

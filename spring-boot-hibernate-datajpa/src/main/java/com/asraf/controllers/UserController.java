@@ -76,10 +76,9 @@ public class UserController {
 	}
 
 	@GetMapping("/search-join-pageable")
-	public Object getBySearchJoinPageable(UserWithVerificationSearch searchItem, Pageable pageable) {
-//		Page<User> pagedUser = this.userService.getBySearchIntoJoiningTablePageable(searchItem, pageable);
-//		return userMappper.getResponseDtos(pagedUser);
-		return searchItem;
+	public Page<UserResponseDto> getBySearchJoinPageable(UserWithVerificationSearch searchItem, Pageable pageable) {
+		Page<User> pagedUser = this.userService.getBySearchIntoJoiningTablePageable(searchItem, pageable);
+		return userMappper.getResponseDtos(pagedUser);
 	}
 
 	@GetMapping("/query")

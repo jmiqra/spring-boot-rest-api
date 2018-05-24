@@ -1,5 +1,7 @@
 package com.asraf.repositories.persistence;
 
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -46,8 +48,10 @@ public class UserRepositoryExtendedImpl implements UserRepositoryExtended {
 			predicate.and(qUser.name.eq(searchItem.getName()));
 		if (searchItem.getEmail() != null)
 			predicate.or(qUser.email.eq(searchItem.getEmail()));
-//		if (searchItem.getCreationTime() != null)
-//			predicate.or(qUserVerification.creationTime.eq(searchItem.getCreationTime()));
+		if (searchItem.getCreationTime() != null) {
+			Date date = Date.from(searchItem.getCreationTime().atStartOfDay(ZoneId.systemDefault()).toInstant());
+			predicate.and(qUserVerification.creationTime.after(date));
+		}
 		
 		query.from(qUser).join(qUser.userVerifications, qUserVerification).where(predicate).distinct();
 
