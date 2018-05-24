@@ -3,6 +3,8 @@ package com.asraf.core.entities;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import com.asraf.enums.Gender;
@@ -11,27 +13,25 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-
 @Entity
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Student extends BaseEntity{
+public class Student extends BaseEntity {
 
-	private Session session;
-	
-	@NotNull
-	private long sessionId = session.getId();
-	
 	@NotNull
 	private String name;
-	
+
 	@NotNull
 	private int age;
-	
+
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
-	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull
+	private Session session;
+
 }
