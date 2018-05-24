@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +24,6 @@ import com.asraf.core.entities.User;
 import com.asraf.core.models.search.UserSearch;
 import com.asraf.core.services.UserService;
 import com.asraf.exceptions.EntityNotFoundException;
-import com.querydsl.core.types.Predicate;
 
 @RestController
 @RequestMapping("/users")

@@ -17,7 +17,6 @@ import com.asraf.core.repositories.UserRepository;
 import com.asraf.core.services.UserService;
 import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.persistence.repositories.UserPredicatesBuilder;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 @Service

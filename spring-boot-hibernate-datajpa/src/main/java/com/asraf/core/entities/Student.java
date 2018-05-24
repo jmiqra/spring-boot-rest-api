@@ -19,6 +19,11 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class Student extends BaseEntity{
 
+	private Session session;
+	
+	@NotNull
+	private long sessionId = session.getId();
+	
 	@NotNull
 	private String name;
 	
