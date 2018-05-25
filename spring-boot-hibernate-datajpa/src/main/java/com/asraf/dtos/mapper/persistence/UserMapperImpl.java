@@ -15,11 +15,11 @@ import com.asraf.entities.UserVerification;
 
 @Component
 @Scope(value = "prototype")
-public class UserMapperImpl extends DtoMapperImpl<User, UserRequestDto, UserResponseDto> implements UserMappper {
+public class UserMapperImpl extends RequestResponseDtoMapperImpl<User, UserResponseDto, UserRequestDto> implements UserMappper {
 
 	@Autowired
 	public UserMapperImpl(ModelMapper modelMapper) {
-		super(User.class, UserResponseDto.class, modelMapper);
+		super(modelMapper, UserResponseDto.class, User.class);
 		
 		PropertyMap<UserVerification, UserVerificationResponseDto> userVerificationEntityToResponsePropertyMap = new PropertyMap<UserVerification, UserVerificationResponseDto>() {
 			protected void configure() {

@@ -4,6 +4,7 @@ import com.asraf.dtos.request.UserVerificationRequestDto;
 import com.asraf.dtos.response.UserVerificationResponseDto;
 import com.asraf.entities.UserVerification;
 
-public interface UserVerificationMappper extends DtoMapper<UserVerification, UserVerificationRequestDto, UserVerificationResponseDto> {
+public interface UserVerificationMappper
+		extends RequestResponseDtoMapper<UserVerification, UserVerificationResponseDto, UserVerificationRequestDto> {
 
 }

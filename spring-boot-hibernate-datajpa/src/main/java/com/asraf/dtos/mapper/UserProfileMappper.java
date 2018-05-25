@@ -5,6 +5,7 @@ import com.asraf.dtos.response.UserProfileResponseDto;
 import com.asraf.entities.User;
 import com.asraf.entities.UserProfile;
 
-public interface UserProfileMappper extends DtoMapper<UserProfile, UserProfileRequestDto, UserProfileResponseDto> {
+public interface UserProfileMappper
+		extends RequestResponseDtoMapper<UserProfile, UserProfileResponseDto, UserProfileRequestDto> {
 	UserProfile getEntity(UserProfileRequestDto requestDto, User user);
 }

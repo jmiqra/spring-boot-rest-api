@@ -14,16 +14,17 @@ import com.asraf.entities.UserProfile;
 
 @Component
 @Scope(value = "prototype")
-public class UserProfileMapperImpl extends DtoMapperImpl<UserProfile, UserProfileRequestDto, UserProfileResponseDto>
+public class UserProfileMapperImpl
+		extends RequestResponseDtoMapperImpl<UserProfile, UserProfileResponseDto, UserProfileRequestDto>
 		implements UserProfileMappper {
 
 	@Autowired
 	public UserProfileMapperImpl(ModelMapper modelMapper) {
-		super(UserProfile.class, UserProfileResponseDto.class, modelMapper);
+		super(modelMapper, UserProfileResponseDto.class, UserProfile.class);
 
 		PropertyMap<UserProfile, UserProfileResponseDto> entityToResponsePropertyMap = new PropertyMap<UserProfile, UserProfileResponseDto>() {
 			protected void configure() {
-				 skip().getUser().setUserVerifications(null);
+				skip().getUser().setUserVerifications(null);
 			}
 		};
 
