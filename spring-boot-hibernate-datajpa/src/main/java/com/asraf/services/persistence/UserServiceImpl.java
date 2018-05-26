@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.asraf.entities.User;
-import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.models.search.UserSearch;
 import com.asraf.models.search.extended.UserWithVerificationSearch;
 import com.asraf.repositories.UserRepository;
 import com.asraf.rsql.CustomRsqlVisitor;
 import com.asraf.services.UserService;
+import com.asraf.util.ExceptionPreconditions;
 
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.ast.Node;
@@ -40,11 +40,12 @@ public class UserServiceImpl implements UserService {
 		userRepository.delete(user);
 	}
 
-	public User getById(Long id) throws EntityNotFoundException {
+	public User getById(Long id) {
 		try {
 			return userRepository.findById(id).get();
 		} catch (NoSuchElementException nseex) {
-			throw new EntityNotFoundException(User.class, "id", id.toString());
+			ExceptionPreconditions.entityNotFound(User.class, "id", id.toString());
+			return null;
 		}
 	}
 
@@ -52,11 +53,9 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAll();
 	}
 
-	public User getByEmail(String email) throws EntityNotFoundException {
+	public User getByEmail(String email) {
 		User user = userRepository.findByEmail(email);
-		if (user == null) {
-			throw new EntityNotFoundException(User.class, "email", email.toString());
-		}
+		ExceptionPreconditions.checkFound(user, User.class, "email", email.toString());
 		return user;
 	}
 

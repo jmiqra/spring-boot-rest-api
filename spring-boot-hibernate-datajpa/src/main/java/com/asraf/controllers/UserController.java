@@ -23,7 +23,6 @@ import com.asraf.dtos.mapper.UserMappper;
 import com.asraf.dtos.request.UserRequestDto;
 import com.asraf.dtos.response.UserResponseDto;
 import com.asraf.entities.User;
-import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.models.search.UserSearch;
 import com.asraf.models.search.extended.UserWithVerificationSearch;
 import com.asraf.services.UserService;
@@ -48,7 +47,7 @@ public class UserController {
 	}
 
 	@GetMapping("/get-by-email/{email}")
-	public UserResponseDto getByEmail(@PathVariable String email) throws EntityNotFoundException {
+	public UserResponseDto getByEmail(@PathVariable String email) {
 		User user = userService.getByEmail(email);
 		return userMappper.getResponseDto(user);
 	}
@@ -110,15 +109,14 @@ public class UserController {
 	}
 
 	@DeleteMapping("/{id}")
-	public UserResponseDto delete(@PathVariable long id) throws EntityNotFoundException {
+	public UserResponseDto delete(@PathVariable long id) {
 		User user = userService.getById(id);
 		userService.delete(user);
 		return userMappper.getResponseDto(user);
 	}
 
 	@PutMapping("/{id}")
-	public UserResponseDto update(@PathVariable long id, @Valid @RequestBody UserRequestDto requestDto)
-			throws EntityNotFoundException {
+	public UserResponseDto update(@PathVariable long id, @Valid @RequestBody UserRequestDto requestDto) {
 		User user = userService.getById(id);
 		userMappper.loadEntity(requestDto, user);
 		userService.save(user);
