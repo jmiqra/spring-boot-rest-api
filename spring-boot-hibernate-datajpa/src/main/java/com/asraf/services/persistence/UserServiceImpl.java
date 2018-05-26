@@ -44,8 +44,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			return userRepository.findById(id).get();
 		} catch (NoSuchElementException nseex) {
-			ExceptionPreconditions.entityNotFound(User.class, "id", id.toString());
-			return null;
+			return ExceptionPreconditions.entityNotFound(User.class, "id", id.toString());
 		}
 	}
 

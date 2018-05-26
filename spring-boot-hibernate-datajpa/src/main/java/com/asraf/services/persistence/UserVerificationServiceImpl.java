@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.asraf.entities.UserVerification;
-import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.repositories.UserVerificationRepository;
 import com.asraf.services.UserVerificationService;
+import com.asraf.util.ExceptionPreconditions;
 
 @Service
 @Transactional
@@ -30,11 +30,11 @@ public class UserVerificationServiceImpl implements UserVerificationService {
 		userVerificationRepository.delete(userVerification);
 	}
 
-	public UserVerification getById(Long id) throws EntityNotFoundException {
+	public UserVerification getById(Long id) {
 		try {
 			return userVerificationRepository.findById(id).get();
 		} catch (NoSuchElementException nseex) {
-			throw new EntityNotFoundException(UserVerification.class, "id", id.toString());
+			return ExceptionPreconditions.entityNotFound(UserVerification.class, "id", id.toString());
 		}
 	}
 

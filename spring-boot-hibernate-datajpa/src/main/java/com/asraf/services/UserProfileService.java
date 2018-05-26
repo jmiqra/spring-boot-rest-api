@@ -9,7 +9,7 @@ public interface UserProfileService {
 
 	void delete(UserProfile userProfile);
 
-	UserProfile getById(Long id) throws EntityNotFoundException;
+	UserProfile getById(Long id);
 
 	Iterable<UserProfile> getAll();
 

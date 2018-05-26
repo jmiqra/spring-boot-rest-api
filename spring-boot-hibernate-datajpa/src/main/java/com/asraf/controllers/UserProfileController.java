@@ -21,7 +21,6 @@ import com.asraf.dtos.request.UserProfileRequestDto;
 import com.asraf.dtos.response.UserProfileResponseDto;
 import com.asraf.entities.User;
 import com.asraf.entities.UserProfile;
-import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.services.UserProfileService;
 import com.asraf.services.UserService;
 
@@ -48,7 +47,7 @@ public class UserProfileController {
 	}
 
 	@GetMapping("/user-profiles/{id}")
-	public UserProfileResponseDto getById(@PathVariable long id) throws EntityNotFoundException {
+	public UserProfileResponseDto getById(@PathVariable long id) {
 		UserProfile userProfile = userProfileService.getById(id);
 		return userProfileMappper.getResponseDto(userProfile);
 	}
@@ -56,7 +55,7 @@ public class UserProfileController {
 	@PostMapping("users/{userId}/user-profiles")
 	@ResponseStatus(HttpStatus.CREATED)
 	public UserProfileResponseDto create(@PathVariable long userId,
-			@Valid @RequestBody UserProfileRequestDto requestDto) throws EntityNotFoundException {
+			@Valid @RequestBody UserProfileRequestDto requestDto) {
 		User user = this.userService.getById(userId);
 		UserProfile userProfile = userProfileMappper.getEntity(requestDto, user);
 		userProfileService.save(userProfile);
@@ -64,7 +63,7 @@ public class UserProfileController {
 	}
 
 	@DeleteMapping("/user-profiles/{id}")
-	public UserProfileResponseDto delete(@PathVariable long id) throws EntityNotFoundException {
+	public UserProfileResponseDto delete(@PathVariable long id) {
 		UserProfile userProfile = userProfileService.getById(id);
 		// TODO: stop removing parent-user
 		userProfileService.delete(userProfile);
@@ -72,8 +71,7 @@ public class UserProfileController {
 	}
 
 	@PutMapping("/user-profiles/{id}")
-	public UserProfileResponseDto update(@PathVariable long id, @Valid @RequestBody UserProfileRequestDto requestDto)
-			throws EntityNotFoundException {
+	public UserProfileResponseDto update(@PathVariable long id, @Valid @RequestBody UserProfileRequestDto requestDto) {
 		UserProfile userProfile = userProfileService.getById(id);
 		userProfileMappper.loadEntity(requestDto, userProfile);
 		userProfileService.save(userProfile);

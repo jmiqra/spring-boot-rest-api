@@ -10,6 +10,7 @@ import com.asraf.entities.UserProfile;
 import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.repositories.UserProfileRepository;
 import com.asraf.services.UserProfileService;
+import com.asraf.util.ExceptionPreconditions;
 
 @Service
 @Transactional
@@ -34,7 +35,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 		try {
 			return userProfileRepository.findById(id).get();
 		} catch (NoSuchElementException nseex) {
-			throw new EntityNotFoundException(UserProfile.class, "id", id.toString());
+			return ExceptionPreconditions.entityNotFound(UserProfile.class, "id", id.toString());
 		}
 	}
 

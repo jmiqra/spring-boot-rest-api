@@ -20,7 +20,6 @@ import com.asraf.dtos.mapper.UserVerificationMappper;
 import com.asraf.dtos.request.UserVerificationRequestDto;
 import com.asraf.dtos.response.UserVerificationResponseDto;
 import com.asraf.entities.UserVerification;
-import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.services.UserVerificationService;
 
 @RestController
@@ -45,7 +44,7 @@ public class UserVerificationController {
 	}
 
 	@GetMapping("/{id}")
-	public UserVerificationResponseDto getById(@PathVariable long id) throws EntityNotFoundException {
+	public UserVerificationResponseDto getById(@PathVariable long id) {
 		UserVerification userVerification = userVerificationService.getById(id);
 		return userVerificationMappper.getResponseDto(userVerification);
 	}
@@ -59,7 +58,7 @@ public class UserVerificationController {
 	}
 
 	@DeleteMapping("/{id}")
-	public UserVerificationResponseDto delete(@PathVariable long id) throws EntityNotFoundException {
+	public UserVerificationResponseDto delete(@PathVariable long id) {
 		UserVerification userVerification = userVerificationService.getById(id);
 		userVerificationService.delete(userVerification);
 		return userVerificationMappper.getResponseDto(userVerification);
@@ -67,7 +66,7 @@ public class UserVerificationController {
 
 	@PutMapping("/{id}")
 	public UserVerificationResponseDto update(@PathVariable long id,
-			@Valid @RequestBody UserVerificationRequestDto requestDto) throws EntityNotFoundException {
+			@Valid @RequestBody UserVerificationRequestDto requestDto) {
 		UserVerification userVerification = userVerificationService.getById(id);
 		userVerificationMappper.loadEntity(requestDto, userVerification);
 		userVerificationService.save(userVerification);
