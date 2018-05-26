@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asraf.dtos.mapper.UserMappper;
@@ -75,12 +77,24 @@ public class UserController {
 		return userMappper.getResponseDtos(pagedUser);
 	}
 
+	/**
+	 * @SampleUrl /users/search-join-pageable?name=rats&email=ratul@test.com&creationTime=21-05-2018&page=0&size=2&sort=name,asc&sort=email,desc
+	 * @param searchItem
+	 * @param pageable
+	 * @return
+	 */
 	@GetMapping("/search-join-pageable")
 	public Page<UserResponseDto> getBySearchJoinPageable(UserWithVerificationSearch searchItem, Pageable pageable) {
 		Page<User> pagedUser = this.userService.getBySearchIntoJoiningTablePageable(searchItem, pageable);
 		return userMappper.getResponseDtos(pagedUser);
 	}
 
+	/**
+	 * @SampleUrl /users/query?search=(name==rats*;id>1,name==ratul);id=in=(2,3,4,5,6)&page=0&size=2&sort=name,asc&sort=email,desc
+	 * @param search
+	 * @param pageable
+	 * @return
+	 */
 	@GetMapping("/query")
 	public Page<UserResponseDto> getByQuery(@RequestParam(value = "search") String search, Pageable pageable) {
 		Page<User> users = userService.getByQuery(search, pageable);
@@ -88,6 +102,7 @@ public class UserController {
 	}
 
 	@PostMapping("")
+	@ResponseStatus(HttpStatus.CREATED)
 	public UserResponseDto create(@Valid @RequestBody UserRequestDto requestDto) {
 		User user = userMappper.getEntity(requestDto);
 		userService.save(user);
