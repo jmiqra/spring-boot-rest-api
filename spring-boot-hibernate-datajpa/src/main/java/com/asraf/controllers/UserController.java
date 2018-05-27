@@ -111,8 +111,9 @@ public class UserController {
 	@DeleteMapping("/{id}")
 	public UserResponseDto delete(@PathVariable long id) {
 		User user = userService.getById(id);
+		UserResponseDto response = userMappper.getResponseDto(user);
 		userService.delete(user);
-		return userMappper.getResponseDto(user);
+		return response;
 	}
 
 	@PutMapping("/{id}")

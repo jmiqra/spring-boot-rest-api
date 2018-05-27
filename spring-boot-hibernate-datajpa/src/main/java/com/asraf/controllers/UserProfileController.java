@@ -65,9 +65,9 @@ public class UserProfileController {
 	@DeleteMapping("/user-profiles/{id}")
 	public UserProfileResponseDto delete(@PathVariable long id) {
 		UserProfile userProfile = userProfileService.getById(id);
-		// TODO: stop removing parent-user
+		UserProfileResponseDto response = userProfileMappper.getResponseDto(userProfile);
 		userProfileService.delete(userProfile);
-		return userProfileMappper.getResponseDto(userProfile);
+		return response;
 	}
 
 	@PutMapping("/user-profiles/{id}")

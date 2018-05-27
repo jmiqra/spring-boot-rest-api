@@ -60,8 +60,9 @@ public class UserVerificationController {
 	@DeleteMapping("/{id}")
 	public UserVerificationResponseDto delete(@PathVariable long id) {
 		UserVerification userVerification = userVerificationService.getById(id);
+		UserVerificationResponseDto response = userVerificationMappper.getResponseDto(userVerification);
 		userVerificationService.delete(userVerification);
-		return userVerificationMappper.getResponseDto(userVerification);
+		return response;
 	}
 
 	@PutMapping("/{id}")
