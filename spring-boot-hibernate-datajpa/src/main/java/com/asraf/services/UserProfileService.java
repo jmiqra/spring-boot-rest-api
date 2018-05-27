@@ -1,7 +1,6 @@
 package com.asraf.services;
 
 import com.asraf.entities.UserProfile;
-import com.asraf.exceptions.EntityNotFoundException;
 
 public interface UserProfileService {
 
