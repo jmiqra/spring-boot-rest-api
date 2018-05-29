@@ -8,9 +8,9 @@ import org.hibernate.cfg.reveng.ReverseEngineeringStrategy;
 import org.hibernate.cfg.reveng.TableIdentifier;
 import org.hibernate.mapping.MetaAttribute;
 
-public class ConcreteClassStrategy extends DelegatingReverseEngineeringStrategy {
+public class EntityGenerationStrategy extends DelegatingReverseEngineeringStrategy {
 
-	public ConcreteClassStrategy(ReverseEngineeringStrategy delegate) {
+	public EntityGenerationStrategy(ReverseEngineeringStrategy delegate) {
 		super(delegate);
 	}
 
@@ -36,4 +36,5 @@ public class ConcreteClassStrategy extends DelegatingReverseEngineeringStrategy 
 
 		return metaAttributes;
 	}
+
 }

@@ -1,5 +1,5 @@
 package com.asraf.entities;
-// Generated May 29, 2018 9:44:37 AM by Hibernate Tools 5.2.10.Final
+// Generated May 29, 2018 10:26:07 AM by Hibernate Tools 5.2.10.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +19,7 @@ import org.hibernate.annotations.Parameter;
 @Table(name = "user_profile", catalog = "mytestdb")
 public class UserProfile extends BaseEntity implements java.io.Serializable {
 
-	private long userId;
+	private long id;
 	private User user;
 	private String address;
 	private String phoneNumber;
@@ -37,13 +37,13 @@ public class UserProfile extends BaseEntity implements java.io.Serializable {
 	@Id
 	@GeneratedValue(generator = "com.asraf.entities.UserProfileIdGenerator")
 
-	@Column(name = "user_id", unique = true, nullable = false)
-	public long getUserId() {
-		return this.userId;
+	@Column(name = "id", unique = true, nullable = false)
+	public long getId() {
+		return this.id;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
