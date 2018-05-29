@@ -121,6 +121,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		if (ex.getCause() instanceof EntityExistsException) {
 			return buildResponseEntity(new ApiError(HttpStatus.CONFLICT, "Resource already exists", ex.getCause()));
 		}
+		log.error(ex);
 		return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex));
 	}
 
@@ -136,6 +137,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(value = { Exception.class })
 	protected ResponseEntity<Object> handleException(RuntimeException ex, WebRequest request) {
+		log.error(ex);
 		ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR);
 		apiError.setMessage("ExceptionHandler is not defined for: " + ex.getClass());
 		apiError.setDebugMessage(ex.getMessage());
