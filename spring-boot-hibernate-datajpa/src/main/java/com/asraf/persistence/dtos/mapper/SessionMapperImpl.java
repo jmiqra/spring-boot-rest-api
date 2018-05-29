@@ -9,25 +9,27 @@ import org.springframework.stereotype.Component;
 import com.asraf.core.dtos.mapper.SessionMapper;
 import com.asraf.core.dtos.request.SessionRequestDto;
 import com.asraf.core.dtos.response.SessionResponseDto;
+import com.asraf.core.dtos.response.StudentResponseDto;
 import com.asraf.core.entities.Session;
+import com.asraf.core.entities.Student;
 
 @Component
 @Scope(value = "prototype")
-public class SessionMapperImpl extends DtoMapperImpl<Session, SessionRequestDto, SessionResponseDto> implements SessionMapper{
+public class SessionMapperImpl extends DtoMapperImpl<Session, SessionRequestDto, SessionResponseDto>
+		implements SessionMapper {
 
 	@Autowired
 	public SessionMapperImpl(ModelMapper modelMapper) {
 		super(Session.class, SessionResponseDto.class, modelMapper);
-	
-		PropertyMap<Session, SessionResponseDto> entityToResponsePropertyMap = new PropertyMap<Session, SessionResponseDto>() {
+
+		PropertyMap<Student, StudentResponseDto> studentEntityToResponsePropertyMap = new PropertyMap<Student, StudentResponseDto>() {
 			protected void configure() {
-				skip().setStudents(null);
+				skip().setSession(null);
 			}
 		};
-		
-		super.setEntityToResponsePropertyMap(entityToResponsePropertyMap);
-		
-		
+
+		super.setNestedObjectPropertyMap(studentEntityToResponsePropertyMap);
+
 	}
 
 }
