@@ -1,6 +1,6 @@
 package com.asraf.util;
 
-import com.asraf.exceptions.EntityNotFoundException;
+import com.asraf.exceptions.ResourceNotFoundException;
 
 public final class ExceptionPreconditions {
 
@@ -15,7 +15,7 @@ public final class ExceptionPreconditions {
 	 *            class type of resource
 	 * @param searchParamsMap
 	 *            sequence of parameter-value string
-	 * @throws EntityNotFoundException
+	 * @throws ResourceNotFoundException
 	 *             if resource is null, means value not found
 	 * @return resource
 	 */
@@ -31,10 +31,10 @@ public final class ExceptionPreconditions {
 	 *            class type of resource
 	 * @param searchParamsMap
 	 *            sequence of parameter-value string
-	 * @throws EntityNotFoundException
+	 * @throws ResourceNotFoundException
 	 *             if resource is null, means value not found
 	 */
-	public static <T> T entityNotFound(final Class<T> clazz, String... searchParamsMap) throws EntityNotFoundException {
-		throw new EntityNotFoundException(clazz, searchParamsMap);
+	public static <T> T entityNotFound(final Class<T> clazz, String... searchParamsMap) throws ResourceNotFoundException {
+		throw new ResourceNotFoundException(clazz, searchParamsMap);
 	}
 }

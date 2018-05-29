@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.asraf.entities.UserProfile;
-import com.asraf.exceptions.EntityNotFoundException;
 import com.asraf.repositories.UserProfileRepository;
 import com.asraf.services.UserProfileService;
 import com.asraf.util.ExceptionPreconditions;
@@ -31,7 +30,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 		userProfileRepository.delete(userProfile);
 	}
 
-	public UserProfile getById(Long id) throws EntityNotFoundException {
+	public UserProfile getById(Long id) {
 		try {
 			return userProfileRepository.findById(id).get();
 		} catch (NoSuchElementException nseex) {

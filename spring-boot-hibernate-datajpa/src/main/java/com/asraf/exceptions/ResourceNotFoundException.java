@@ -6,15 +6,15 @@ import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class EntityNotFoundException extends RuntimeException {
+public class ResourceNotFoundException extends RuntimeException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public EntityNotFoundException(Class<?> clazz, String... searchParamsMap) {
-		super(EntityNotFoundException.generateMessage(clazz.getSimpleName(),
+	public ResourceNotFoundException(Class<?> clazz, String... searchParamsMap) {
+		super(ResourceNotFoundException.generateMessage(clazz.getSimpleName(),
 				toMap(String.class, String.class, searchParamsMap)));
 	}
 

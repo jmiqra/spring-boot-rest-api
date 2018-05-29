@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import java.util.NoSuchElementException;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.core.Ordered;
@@ -26,7 +27,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.asraf.exceptions.EntityNotFoundException;
+import com.asraf.exceptions.ResourceNotFoundException;
 
 import lombok.extern.log4j.Log4j;
 
@@ -92,15 +93,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		return buildResponseEntity(apiError);
 	}
 
-	@ExceptionHandler(EntityNotFoundException.class)
-	protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
+	@ExceptionHandler(ResourceNotFoundException.class)
+	protected ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
 		ApiError apiError = new ApiError(NOT_FOUND);
 		apiError.setMessage(ex.getMessage());
 		return buildResponseEntity(apiError);
 	}
 
-	@ExceptionHandler(javax.persistence.EntityNotFoundException.class)
-	protected ResponseEntity<Object> handleEntityNotFound(javax.persistence.EntityNotFoundException ex) {
+	@ExceptionHandler(EntityNotFoundException.class)
+	protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
 		return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, ex));
 	}
 
@@ -114,24 +115,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	protected ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException ex,
 			WebRequest request) {
-		if (ex.getCause() instanceof ConstraintViolationException || ex.getCause() instanceof EntityExistsException) {
+		if (ex.getCause() instanceof ConstraintViolationException) {
 			return buildResponseEntity(new ApiError(HttpStatus.CONFLICT, "Database error", ex.getCause()));
+		}
+		if (ex.getCause() instanceof EntityExistsException) {
+			return buildResponseEntity(new ApiError(HttpStatus.CONFLICT, "Resource already exists", ex.getCause()));
 		}
 		return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex));
 	}
-
-	// @ExceptionHandler(EntityExistsException.class )
-	// protected ResponseEntity<Object>
-	// handleEntityExistsException(EntityExistsException ex,
-	// WebRequest request) {
-	// System.out.println("=> " + ex.getCause());
-	// if (ex.getCause() instanceof ConstraintViolationException) {
-	// return buildResponseEntity(new ApiError(HttpStatus.CONFLICT, "Database
-	// error", ex.getCause()));
-	// }
-	// return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR,
-	// ex));
-	// }
 
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
