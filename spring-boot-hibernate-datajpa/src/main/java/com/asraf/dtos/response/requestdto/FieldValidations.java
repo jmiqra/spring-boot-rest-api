@@ -1,4 +1,4 @@
-package com.asraf.dtos.response.request;
+package com.asraf.dtos.response.requestdto;
 
 import java.util.Map;
 

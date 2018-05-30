@@ -11,10 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
 import com.asraf.dtos.mapper.ResponseDtoMapper;
-import com.asraf.dtos.response.BaseResponseDto;
+import com.asraf.dtos.response.BaseEntityResponseDto;
 import com.asraf.entities.BaseEntity;
 
-public abstract class ResponseDtoMapperImpl<TEntity extends BaseEntity, TResponseDto extends BaseResponseDto>
+public abstract class ResponseDtoMapperImpl<TEntity extends BaseEntity, TResponseDto extends BaseEntityResponseDto>
 		extends DtoMapperImpl implements ResponseDtoMapper<TEntity, TResponseDto> {
 
 	private Class<TResponseDto> tResponseDtoType;

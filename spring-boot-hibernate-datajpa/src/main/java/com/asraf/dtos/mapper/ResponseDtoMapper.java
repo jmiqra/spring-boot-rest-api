@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import com.asraf.dtos.response.BaseResponseDto;
+import com.asraf.dtos.response.BaseEntityResponseDto;
 import com.asraf.entities.BaseEntity;
 
-public interface ResponseDtoMapper<TEntity extends BaseEntity, TResponseDto extends BaseResponseDto> extends DtoMapper {
+public interface ResponseDtoMapper<TEntity extends BaseEntity, TResponseDto extends BaseEntityResponseDto> extends DtoMapper {
 
 	TResponseDto getResponseDto(TEntity entity);
 

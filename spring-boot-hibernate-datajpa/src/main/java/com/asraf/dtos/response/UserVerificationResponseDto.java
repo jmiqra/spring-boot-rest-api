@@ -9,7 +9,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class UserVerificationResponseDto extends BaseResponseDto {
+public class UserVerificationResponseDto extends BaseEntityResponseDto {
 
 	private String verificationCode;
 
