@@ -16,7 +16,8 @@ import com.asraf.models.search.extended.UserWithVerificationSearch;
 import com.asraf.repositories.UserRepository;
 import com.asraf.rsql.CustomRsqlVisitor;
 import com.asraf.services.UserService;
-import com.asraf.util.ExceptionPreconditions;
+import com.asraf.utils.ExceptionPreconditions;
+import com.asraf.utils.StringUtils;
 
 import cz.jirutka.rsql.parser.RSQLParser;
 import cz.jirutka.rsql.parser.ast.Node;
@@ -76,6 +77,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public Page<User> getByQuery(String search, Pageable pageable) {
+		if (StringUtils.isNullOrEmpty(search))
+			return userRepository.findAll(pageable);
 		Node rootNode = new RSQLParser().parse(search);
 		Specification<User> spec = rootNode.accept(new CustomRsqlVisitor<User>());
 		Page<User> users = userRepository.findAll(spec, pageable);

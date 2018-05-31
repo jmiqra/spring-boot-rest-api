@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.asraf.entities.UserProfile;
 import com.asraf.repositories.UserProfileRepository;
 import com.asraf.services.UserProfileService;
-import com.asraf.util.ExceptionPreconditions;
+import com.asraf.utils.ExceptionPreconditions;
 
 @Service
 @Transactional

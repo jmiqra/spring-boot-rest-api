@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.asraf.entities.UserVerification;
 import com.asraf.repositories.UserVerificationRepository;
 import com.asraf.services.UserVerificationService;
-import com.asraf.util.ExceptionPreconditions;
+import com.asraf.utils.ExceptionPreconditions;
 
 @Service
 @Transactional

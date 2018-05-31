@@ -1,4 +1,4 @@
-package com.asraf.util;
+package com.asraf.utils;
 
 import com.asraf.exceptions.ResourceNotFoundException;
 

@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 
 import com.asraf.dtos.request.BaseRequestDto;
 import com.asraf.dtos.response.BaseResponseDto;
-import com.asraf.util.EnumUtil;
+import com.asraf.utils.EnumUtils;
 import com.asraf.validators.EnumValueConstraint;
 
 import lombok.Data;
@@ -48,7 +48,7 @@ public class RequestBodyResponseDto<T extends BaseRequestDto> extends BaseRespon
 					validations.setPattern(((Pattern) annotation).regexp());
 				} else if (annotation instanceof EnumValueConstraint) {
 					Class<? extends Enum<?>> enumClazz = ((EnumValueConstraint) annotation).enumClass();
-					validations.setOptions(EnumUtil.getNameValues(enumClazz));
+					validations.setOptions(EnumUtils.getNameValues(enumClazz));
 				}
 			}
 			RequestField requestField = RequestField.builder().name(field.getName())

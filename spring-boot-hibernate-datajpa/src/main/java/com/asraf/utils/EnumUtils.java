@@ -1,10 +1,10 @@
-package com.asraf.util;
+package com.asraf.utils;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public final class EnumUtil {
+public final class EnumUtils {
 	public static String[] getNames(Class<? extends Enum<?>> enumClazz) {
 		return Arrays.stream(enumClazz.getEnumConstants()).map(Enum::name).toArray(String[]::new);
 	}
