@@ -3,6 +3,8 @@ package com.asraf.validators;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import com.asraf.utils.StringUtils;
+
 public class EnumValueValidator implements ConstraintValidator<EnumValueConstraint, String> {
 	private EnumValueConstraint annotation;
 
@@ -17,7 +19,7 @@ public class EnumValueValidator implements ConstraintValidator<EnumValueConstrai
 
 		Object[] enumValues = this.annotation.enumClass().getEnumConstants();
 
-		if (enumValues != null) {
+		if (!StringUtils.isNullOrWhitespace(valueForValidation) && enumValues != null) {
 			for (Object enumValue : enumValues) {
 				if (valueForValidation.equals(enumValue.toString()) || (this.annotation.ignoreCase()
 						&& valueForValidation.equalsIgnoreCase(enumValue.toString()))) {
