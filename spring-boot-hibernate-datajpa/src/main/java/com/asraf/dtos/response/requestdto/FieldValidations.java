@@ -12,6 +12,7 @@ import lombok.Data;
 public class FieldValidations {
 	private Boolean isRequired;
 	private Boolean isEmail;
+	private Boolean isMobileNumber;
 	private Long minValue;
 	private Long maxValue;
 	private Integer minSize;

@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 import com.asraf.dtos.request.BaseRequestDto;
 import com.asraf.dtos.response.BaseResponseDto;
 import com.asraf.utils.EnumUtils;
+import com.asraf.validators.ContactNumberConstraint;
 import com.asraf.validators.EnumValueConstraint;
 
 import lombok.Data;
@@ -37,6 +38,8 @@ public class RequestBodyResponseDto<T extends BaseRequestDto> extends BaseRespon
 					validations.setIsRequired(true);
 				} else if (annotation instanceof Email) {
 					validations.setIsEmail(true);
+				} else if (annotation instanceof ContactNumberConstraint) {
+					validations.setIsMobileNumber(true);
 				} else if (annotation instanceof Min) {
 					validations.setMinValue(((Min) annotation).value());
 				} else if (annotation instanceof Max) {
