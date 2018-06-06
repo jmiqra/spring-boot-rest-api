@@ -116,7 +116,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException ex,
 			WebRequest request) {
 		if (ex.getCause() instanceof ConstraintViolationException) {
-			return buildResponseEntity(new ApiError(HttpStatus.CONFLICT, "Database error", ex.getCause()));
+			return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST,
+					"Operation cannot be performed. Integrity Constraint violated", ex.getCause()));
 		}
 		if (ex.getCause() instanceof EntityExistsException) {
 			return buildResponseEntity(new ApiError(HttpStatus.CONFLICT, "Resource already exists", ex.getCause()));
