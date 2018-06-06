@@ -2,11 +2,10 @@ package com.asraf.controllers;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,8 +54,8 @@ public class UserController {
 		List<User> users = userService.getByNameContains(name);
 		return userMappper.getResponseDtos(users);
 	}
-	
-	//Changes Iqra
+
+	// Changes Iqra
 	@GetMapping("/get-by-id/{id}")
 	public UserResponseDto getById(@PathVariable long id) throws EntityNotFoundException {
 		User user = userService.getById(id);
@@ -88,7 +87,7 @@ public class UserController {
 	}
 
 	@PostMapping("")
-	public UserResponseDto create(@Valid @RequestBody UserRequestDto requestDto) {
+	public UserResponseDto create(@Validated(UserRequestDto.New.class) @RequestBody UserRequestDto requestDto) {
 		User user = userMappper.getEntity(requestDto);
 		userService.save(user);
 		return userMappper.getResponseDto(user);
@@ -102,7 +101,8 @@ public class UserController {
 	}
 
 	@PutMapping("/{id}")
-	public UserResponseDto update(@PathVariable long id, @Valid @RequestBody UserRequestDto requestDto)
+	public UserResponseDto update(@PathVariable long id,
+			@Validated(UserRequestDto.Existing.class) @RequestBody UserRequestDto requestDto)
 			throws EntityNotFoundException {
 		User user = userService.getById(id);
 		userMappper.loadEntity(requestDto, user);

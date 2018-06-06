@@ -23,7 +23,6 @@ public class User extends BaseEntity {
 	@NotNull
 	private String email;
 
-	@NotNull
 	private String name;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
