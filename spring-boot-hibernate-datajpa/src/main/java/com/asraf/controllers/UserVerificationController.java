@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.asraf.controllers.resources.UserVerificationResource;
 import com.asraf.dtos.mapper.UserVerificationMappper;
 import com.asraf.dtos.request.UserVerificationRequestDto;
 import com.asraf.dtos.response.UserVerificationResponseDto;
@@ -45,9 +46,9 @@ public class UserVerificationController {
 	}
 
 	@GetMapping("/{id}")
-	public UserVerificationResponseDto getById(@PathVariable long id) {
+	public UserVerificationResource getById(@PathVariable long id) {
 		UserVerification userVerification = userVerificationService.getById(id);
-		return userVerificationMappper.getResponseDto(userVerification);
+		return new UserVerificationResource(userVerification, userVerificationMappper);
 	}
 
 	@GetMapping("/form")

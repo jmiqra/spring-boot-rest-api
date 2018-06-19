@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -94,7 +95,7 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/query")
-	public Page<UserResponseDto> getByQuery(String search, Pageable pageable) {
+	public Page<UserResponseDto> getByQuery(@RequestParam String search, Pageable pageable) {
 		Page<User> users = userService.getByQuery(search, pageable);
 		return userMappper.getResponseDtos(users);
 	}
