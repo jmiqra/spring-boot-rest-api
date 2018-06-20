@@ -13,12 +13,14 @@ import com.asraf.entities.UserVerification;
 import lombok.Getter;
 
 @Getter
-public class UserVerificationResource extends BaseResource<UserVerification, UserVerificationResponseDto> {
+public class UserVerificationResource extends BaseResource {
+
+	private final UserVerificationResponseDto userVerification;
 
 	public UserVerificationResource(final UserVerification userVerification,
 			final UserVerificationMappper userVerificationMappper) {
 
-		super(userVerification, userVerificationMappper);
+		this.userVerification = userVerificationMappper.getResponseDto(userVerification);
 		final long id = userVerification.getId();
 		final User user = userVerification.getUser();
 
@@ -27,5 +29,6 @@ public class UserVerificationResource extends BaseResource<UserVerification, Use
 		add(linkTo(methodOn(UserController.class).getByEmail(user.getEmail())).withRel("user"));
 		add(linkTo(methodOn(UserController.class).getByName(user.getName())).withRel("user"));
 		add(linkTo(methodOn(UserController.class).getByQuery("id==" + user.getId(), null)).withRel("user"));
+
 	}
 }
