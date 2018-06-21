@@ -46,4 +46,9 @@ public class UserVerificationMapperImpl
 		userVerification.setCreationTime(new Date());
 		return userVerification;
 	}
+	
+	public void loadEntity(UserVerificationRequestDto requestDto, UserVerification entity) {
+		entity.setUser(null);
+		super.loadEntity(requestDto, entity);
+	}
 }
