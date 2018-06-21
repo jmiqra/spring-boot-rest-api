@@ -7,9 +7,9 @@ import com.asraf.dtos.mapper.DtoMapper;
 
 public abstract class DtoMapperImpl implements DtoMapper {
 
-	protected ModelMapper modelMapper;
+	protected final ModelMapper modelMapper;
 
-	protected DtoMapperImpl(ModelMapper modelMapper) {
+	protected DtoMapperImpl(final ModelMapper modelMapper) {
 		this.modelMapper = modelMapper;
 		this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 	}

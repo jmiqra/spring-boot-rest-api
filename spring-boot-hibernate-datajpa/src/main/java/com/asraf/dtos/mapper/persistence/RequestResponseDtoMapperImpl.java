@@ -12,24 +12,24 @@ public abstract class RequestResponseDtoMapperImpl<TEntity extends BaseEntity, T
 		extends ResponseDtoMapperImpl<TEntity, TResponseDto>
 		implements RequestResponseDtoMapper<TEntity, TResponseDto, TRequestDto> {
 
-	private Class<TEntity> tEntityType;
+	private final Class<TEntity> tEntityType;
 
-	protected RequestResponseDtoMapperImpl(ModelMapper modelMapper, Class<TResponseDto> responseDtoType,
-			Class<TEntity> entityType) {
+	protected RequestResponseDtoMapperImpl(final ModelMapper modelMapper, final Class<TResponseDto> responseDtoType,
+			final Class<TEntity> entityType) {
 		super(modelMapper, responseDtoType);
 		this.tEntityType = entityType;
 	}
 
-	public TEntity getEntity(TRequestDto requestDto) {
+	public TEntity getEntity(final TRequestDto requestDto) {
 		return modelMapper.map(requestDto, tEntityType);
 	}
 
-	public void loadEntity(TRequestDto requestDto, TEntity entity) {
+	public void loadEntity(final TRequestDto requestDto, final TEntity entity) {
 		modelMapper.map(requestDto, entity);
 	}
 
-	protected RequestResponseDtoMapperImpl<TEntity, TResponseDto, TRequestDto> setRequestToEntityPropertyMap(
-			PropertyMap<TRequestDto, TEntity> requestToEntityPropertyMap) {
+	protected final RequestResponseDtoMapperImpl<TEntity, TResponseDto, TRequestDto> setRequestToEntityPropertyMap(
+			final PropertyMap<TRequestDto, TEntity> requestToEntityPropertyMap) {
 		if (requestToEntityPropertyMap != null) {
 			this.modelMapper.addMappings(requestToEntityPropertyMap);
 		}
