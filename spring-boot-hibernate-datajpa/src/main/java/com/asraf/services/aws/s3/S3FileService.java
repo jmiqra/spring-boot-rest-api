@@ -9,9 +9,9 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 
 @Service
-public class FileService extends ObjectService {
+public class S3FileService extends S3ObjectService {
 
-	public FileService() {
+	public S3FileService() {
 	}
 
 	public void download(String key, File outputFile) {

@@ -10,11 +10,11 @@ import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 
 @Service
-public class BucketService extends S3Service {
+public class S3BucketService extends S3Service {
 
 	private String region;
 
-	public BucketService() {
+	public S3BucketService() {
 		
 	}
 

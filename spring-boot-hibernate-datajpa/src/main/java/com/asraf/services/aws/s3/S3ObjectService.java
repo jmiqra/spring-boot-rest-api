@@ -23,13 +23,13 @@ import com.amazonaws.services.s3.model.Permission;
 import com.amazonaws.services.s3.model.PutObjectResult;
 
 @Service
-public class ObjectService extends S3Service {
+public class S3ObjectService extends S3Service {
 
 	protected final String BUCKET_NAME;
 
 	private final String BUCKET_URL_PREFIX;
 
-	public ObjectService() {
+	public S3ObjectService() {
 		BUCKET_NAME = "ratul-test";
 		BUCKET_URL_PREFIX = "https://" + BUCKET_NAME + ".s3.amazonaws.com/";
 	}
@@ -73,8 +73,8 @@ public class ObjectService extends S3Service {
 		return BUCKET_URL_PREFIX + key;
 	}
 
-	public String getKey(String publicUrl) {
-		return publicUrl.substring(0, BUCKET_URL_PREFIX.length());
+	public String getKey(String bucketUrl) {
+		return bucketUrl.substring(0, BUCKET_URL_PREFIX.length());
 	}
 
 	public ObjectListing getAllObjects(String prefix) {
@@ -86,7 +86,7 @@ public class ObjectService extends S3Service {
 		return objectListing;
 	}
 
-	public URL getPreSignedUrl(String key, String contentType, HttpMethod httpMethod, int expirationInMinute) {
+	public URL getPreSignedUrl(String key, HttpMethod httpMethod, int expirationInMinute) {
 		Date expiration = new Date();
 		long expTimeMillis = expiration.getTime();
 		expTimeMillis += 1000 * 60 * expirationInMinute;
