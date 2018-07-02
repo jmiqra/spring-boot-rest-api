@@ -1,4 +1,4 @@
-CREATE TABLE `mytestdb`.`user_verification` (
+CREATE TABLE `mytestdb2`.`user_verification` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `verification_code` VARCHAR(45) NOT NULL,
   `creation_time` DATETIME NOT NULL,
