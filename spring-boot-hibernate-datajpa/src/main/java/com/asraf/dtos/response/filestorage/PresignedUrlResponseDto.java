@@ -13,6 +13,6 @@ import lombok.ToString;
 @Builder
 public class PresignedUrlResponseDto extends BaseResponseDto {
 	private String presignedUrl;
-	private String key;
+	private String filePath;
 	private String publicUrl;
 }

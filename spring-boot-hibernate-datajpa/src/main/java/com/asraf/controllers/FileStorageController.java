@@ -1,16 +1,20 @@
 package com.asraf.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.asraf.dtos.request.filestorage.AclRequestDto;
-import com.asraf.dtos.request.filestorage.ObjectRequestDto;
+import com.asraf.dtos.request.filestorage.FileObjectRequestDto;
+import com.asraf.dtos.request.filestorage.FolderObjectRequestDto;
 import com.asraf.dtos.request.filestorage.PresignedUrlRequestDto;
 import com.asraf.dtos.response.filestorage.PresignedUrlResponseDto;
+import com.asraf.exceptions.StoragePathNotFoundException;
 import com.asraf.services.aws.s3.S3ObjectService;
 
 @RestController
@@ -30,7 +34,7 @@ public class FileStorageController {
 				requestDto.getExpirationInMinute()).toString();
 		String publicUrl = s3ObjectService.getBucketUrl(requestDto.getFilePath());
 		return PresignedUrlResponseDto.builder().presignedUrl(presignedUrl).publicUrl(publicUrl)
-				.key(requestDto.getFilePath()).build();
+				.filePath(requestDto.getFilePath()).build();
 	}
 
 	@PutMapping("/acl")
@@ -39,8 +43,25 @@ public class FileStorageController {
 	}
 
 	@PutMapping("/make-public")
-	public void makePublic(@RequestBody ObjectRequestDto requestDto) {
+	public void makePublic(@RequestBody FileObjectRequestDto requestDto) {
 		s3ObjectService.makePublic(requestDto.getFilePath());
+	}
+
+	@DeleteMapping("/file")
+	public void deleteFile(@RequestBody FileObjectRequestDto requestDto) {
+		if (!s3ObjectService.isExists(requestDto.getFilePath())) {
+			throw new StoragePathNotFoundException("filePath", requestDto.getFilePath());
+		}
+		s3ObjectService.delete(requestDto.getFilePath());
+	}
+
+	@DeleteMapping("/folder")
+	public void deleteFolder(@RequestBody FolderObjectRequestDto requestDto) {
+		try {
+			s3ObjectService.deleteAllObjects(requestDto.getFolderPath());
+		} catch (AmazonS3Exception e) {
+			throw new StoragePathNotFoundException("folderPath", requestDto.getFolderPath());
+		}
 	}
 
 }

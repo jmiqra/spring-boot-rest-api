@@ -11,7 +11,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class AclRequestDto extends ObjectRequestDto {
+public class AclRequestDto extends FileObjectRequestDto {
 	@NotNull
 	private CannedAccessControlList cannedAccessControlList;
 }

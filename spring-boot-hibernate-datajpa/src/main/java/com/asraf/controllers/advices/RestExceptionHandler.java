@@ -28,6 +28,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.asraf.exceptions.ResourceNotFoundException;
+import com.asraf.exceptions.StoragePathNotFoundException;
 
 import lombok.extern.log4j.Log4j;
 
@@ -93,8 +94,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		return buildResponseEntity(apiError);
 	}
 
-	@ExceptionHandler(ResourceNotFoundException.class)
-	protected ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
+	@ExceptionHandler({ NoSuchElementException.class, ResourceNotFoundException.class,
+			StoragePathNotFoundException.class })
+	protected ResponseEntity<Object> handleResourceNotFoundException(Exception ex) {
 		ApiError apiError = new ApiError(NOT_FOUND);
 		apiError.setMessage(ex.getMessage());
 		return buildResponseEntity(apiError);
@@ -103,13 +105,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(EntityNotFoundException.class)
 	protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
 		return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, ex));
-	}
-
-	@ExceptionHandler(NoSuchElementException.class)
-	protected ResponseEntity<Object> handleNoSuchElement(NoSuchElementException ex) {
-		ApiError apiError = new ApiError(NOT_FOUND);
-		apiError.setMessage(ex.getMessage());
-		return buildResponseEntity(apiError);
 	}
 
 	@ExceptionHandler(DataIntegrityViolationException.class)

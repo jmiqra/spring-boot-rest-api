@@ -11,7 +11,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class PresignedUrlRequestDto extends ObjectRequestDto {
+public class PresignedUrlRequestDto extends FileObjectRequestDto {
 	@NotNull
 	private HttpMethod httpMethod;
 	@NotNull

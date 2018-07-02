@@ -11,7 +11,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ObjectRequestDto extends BaseRequestDto {
+public class FolderObjectRequestDto extends BaseRequestDto {
 	@NotBlank
-	private String filePath;
+	private String folderPath;
 }
