@@ -2,20 +2,23 @@ package com.asraf.services.aws.s3;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 
 @Service
-public class S3BucketService extends S3Service {
+public class S3BucketService {
 
-	private String region;
+	protected AmazonS3 s3Client;
 
-	public S3BucketService() {
-		
+	@Autowired
+	public S3BucketService(AmazonS3 s3Client) {
+		this.s3Client = s3Client;
 	}
 
 	public boolean isBucketExists(String bucketName) {
@@ -26,7 +29,7 @@ public class S3BucketService extends S3Service {
 		if (this.isBucketExists(bucketName)) {
 			throw new Exception(bucketName + " - bucket already exists!");
 		}
-		CreateBucketRequest request = new CreateBucketRequest(bucketName, region);
+		CreateBucketRequest request = new CreateBucketRequest(bucketName, s3Client.getRegionName());
 		s3Client.createBucket(request);
 	}
 

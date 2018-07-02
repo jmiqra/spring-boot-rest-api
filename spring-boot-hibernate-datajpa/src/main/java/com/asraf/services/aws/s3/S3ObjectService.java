@@ -8,9 +8,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.amazonaws.HttpMethod;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.AccessControlList;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest;
@@ -23,14 +26,19 @@ import com.amazonaws.services.s3.model.Permission;
 import com.amazonaws.services.s3.model.PutObjectResult;
 
 @Service
-public class S3ObjectService extends S3Service {
+public class S3ObjectService {
+
+	protected AmazonS3 s3Client;
 
 	protected final String BUCKET_NAME;
 
 	private final String BUCKET_URL_PREFIX;
 
-	public S3ObjectService() {
-		BUCKET_NAME = "ratul-test";
+	@Autowired
+	public S3ObjectService(AmazonS3 s3Client, @Value("${aws.s3.bucket}") String bucketName) {
+		this.s3Client = s3Client;
+
+		BUCKET_NAME = bucketName;
 		BUCKET_URL_PREFIX = "https://" + BUCKET_NAME + ".s3.amazonaws.com/";
 	}
 
@@ -87,6 +95,7 @@ public class S3ObjectService extends S3Service {
 	}
 
 	public URL getPreSignedUrl(String key, HttpMethod httpMethod, int expirationInMinute) {
+		System.out.println(BUCKET_NAME);
 		Date expiration = new Date();
 		long expTimeMillis = expiration.getTime();
 		expTimeMillis += 1000 * 60 * expirationInMinute;
