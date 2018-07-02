@@ -2,51 +2,19 @@ package com.asraf.services.aws.s3;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.CreateBucketRequest;
-import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 
-@Service
-public class S3BucketService {
+public interface S3BucketService {
 
-	protected AmazonS3 s3Client;
+	boolean isBucketExists(String bucketName);
 
-	@Autowired
-	public S3BucketService(AmazonS3 s3Client) {
-		this.s3Client = s3Client;
-	}
+	void createBucket(String bucketName) throws Exception;
 
-	public boolean isBucketExists(String bucketName) {
-		return s3Client.doesBucketExistV2(bucketName);
-	}
+	void deleteBucket(String bucketName) throws Exception;
 
-	public void createBucket(String bucketName) throws Exception {
-		if (this.isBucketExists(bucketName)) {
-			throw new Exception(bucketName + " - bucket already exists!");
-		}
-		CreateBucketRequest request = new CreateBucketRequest(bucketName, s3Client.getRegionName());
-		s3Client.createBucket(request);
-	}
+	List<Bucket> getAllS3Buckets();
 
-	public void deleteBucket(String bucketName) throws Exception {
-		if (this.isBucketExists(bucketName)) {
-			throw new Exception(bucketName + " - bucket already exists!");
-		}
-		s3Client.deleteBucket(bucketName);
-	}
-
-	public List<Bucket> getAllS3Buckets() {
-		return s3Client.listBuckets();
-	}
-
-	public ObjectListing showBucketSummary(String bucketName) {
-		ObjectListing objectListing = s3Client.listObjects(new ListObjectsRequest().withBucketName(bucketName));
-		return objectListing;
-	}
+	ObjectListing showBucketSummary(String bucketName);
 
 }
