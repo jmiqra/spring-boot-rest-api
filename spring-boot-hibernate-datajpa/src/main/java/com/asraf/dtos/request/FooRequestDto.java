@@ -1,6 +1,6 @@
 package com.asraf.dtos.request;
 
-import com.asraf.validators.EqualValueConstraint;
+import com.asraf.validators.TwoSidedConditionalConstraint;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +11,10 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class FooRequestDto extends BaseRequestDto {
 
-	@EqualValueConstraint(message="my name is iqrah")
-	private String phoneNo;
+	@TwoSidedConditionalConstraint
+	private String phoneNo1;
+	
+	@TwoSidedConditionalConstraint
+	private String phoneNo2; 
 	
 }
