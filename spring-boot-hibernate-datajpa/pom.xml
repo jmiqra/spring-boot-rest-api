@@ -7,7 +7,7 @@
 	<groupId>com.asraf</groupId>
 	<artifactId>spring-boot-hibernate-datajpa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>spring-boot-hibernate-datajpa</name>
 	<description>Spring Boot based Web Application with Hibernate and Spring Data JPA</description>
@@ -130,9 +130,19 @@
 			<artifactId>aws-java-sdk-s3</artifactId>
 		</dependency>
 
+		<!-- Deployment in Tomcat -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
+
+		<finalName>${project.artifactId}</finalName>
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
