@@ -12,6 +12,7 @@ import lombok.Data;
 public class RequestField {
 	private String name;
 	private String type;
+	private String parameterizedType;
 	private String value;
 	private FieldValidations validations;
 }

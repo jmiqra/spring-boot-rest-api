@@ -2,6 +2,7 @@ package com.asraf.dtos.response.requestdto;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class RequestBodyResponseDto<T extends BaseRequestDto> extends BaseRespon
 		Class<?> clazzCurrent = this.clazzRequestDto;
 		for (; level > 0; level--) {
 			Class<?> clazzSuper = clazzCurrent.getSuperclass();
-			if(clazzSuper == null) {
+			if (clazzSuper == null) {
 				return this;
 			}
 			for (Field field : clazzSuper.getDeclaredFields()) {
@@ -82,7 +83,16 @@ public class RequestBodyResponseDto<T extends BaseRequestDto> extends BaseRespon
 			}
 		}
 		return RequestField.builder().name(field.getName()).type(field.getType().getSimpleName())
-				.validations(validations).build();
+				.parameterizedType(getParameterizedTypeName(field)).validations(validations).build();
 	}
 
+	private String getParameterizedTypeName(Field field) {
+		try {
+			ParameterizedType parameterizedType = (ParameterizedType) field.getGenericType();
+			Class<?> parameterizedTypeClass = (Class<?>) parameterizedType.getActualTypeArguments()[0];
+			return parameterizedTypeClass.getSimpleName();
+		} catch (ClassCastException e) {
+			return null;
+		}
+	}
 }
