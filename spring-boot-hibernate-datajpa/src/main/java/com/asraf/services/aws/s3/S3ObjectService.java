@@ -1,6 +1,7 @@
 package com.asraf.services.aws.s3;
 
 import java.net.URL;
+import java.util.List;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -31,5 +32,7 @@ public interface S3ObjectService {
 	DeleteObjectsResult deleteAllObjects(String prefix);
 
 	void delete(String key);
+
+	DeleteObjectsResult delete(List<String> keys);
 
 }

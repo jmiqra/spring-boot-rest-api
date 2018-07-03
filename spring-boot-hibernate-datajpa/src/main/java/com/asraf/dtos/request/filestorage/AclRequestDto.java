@@ -1,8 +1,7 @@
 package com.asraf.dtos.request.filestorage;
 
-import javax.validation.constraints.NotNull;
-
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.asraf.validators.EnumValueConstraint;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +11,6 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class AclRequestDto extends FileObjectRequestDto {
-	@NotNull
-	private CannedAccessControlList cannedAccessControlList;
+	@EnumValueConstraint(enumClass = CannedAccessControlList.class, ignoreCase = false)
+	private String cannedAccessControlList;
 }

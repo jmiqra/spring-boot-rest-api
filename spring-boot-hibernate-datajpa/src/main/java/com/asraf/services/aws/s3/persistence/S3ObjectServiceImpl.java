@@ -107,4 +107,11 @@ public class S3ObjectServiceImpl implements S3ObjectService {
 		s3Client.deleteObject(BUCKET_NAME, key);
 	}
 
+	public DeleteObjectsResult delete(List<String> keys) {
+		List<KeyVersion> keyVersions = keys.stream().map(m -> new KeyVersion(m))
+				.collect(Collectors.toList());
+		DeleteObjectsRequest deleteObjectsRequest = new DeleteObjectsRequest(BUCKET_NAME).withKeys(keyVersions);
+		return s3Client.deleteObjects(deleteObjectsRequest);
+	}
+	
 }
