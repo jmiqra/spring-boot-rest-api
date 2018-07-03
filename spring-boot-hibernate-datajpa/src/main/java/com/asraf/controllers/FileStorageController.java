@@ -70,6 +70,13 @@ public class FileStorageController {
 		s3ObjectService.makePublic(requestDto.getFilePath());
 	}
 
+	@GetMapping("/make-public/request")
+	public RequestBodyResponseDto<FileObjectRequestDto> getMakePublicRequest() {
+		RequestBodyResponseDto<FileObjectRequestDto> response = new RequestBodyResponseDto<FileObjectRequestDto>(
+				FileObjectRequestDto.class);
+		return response;
+	}
+
 	@DeleteMapping("/file")
 	public void deleteFile(@Valid @RequestBody FileObjectRequestDto requestDto) {
 		if (!s3ObjectService.isExists(requestDto.getFilePath())) {
@@ -78,9 +85,23 @@ public class FileStorageController {
 		s3ObjectService.delete(requestDto.getFilePath());
 	}
 
+	@GetMapping("/file/request")
+	public RequestBodyResponseDto<FileObjectRequestDto> getDeleteFileRequest() {
+		RequestBodyResponseDto<FileObjectRequestDto> response = new RequestBodyResponseDto<FileObjectRequestDto>(
+				FileObjectRequestDto.class);
+		return response;
+	}
+
 	@DeleteMapping("/files")
 	public DeleteObjectsResult deleteFiles(@Valid @RequestBody FilesObjectRequestDto requestDto) {
 		return s3ObjectService.delete(requestDto.getFilePaths());
+	}
+
+	@GetMapping("/files/request")
+	public RequestBodyResponseDto<FilesObjectRequestDto> getDeleteFilesRequest() {
+		RequestBodyResponseDto<FilesObjectRequestDto> response = new RequestBodyResponseDto<FilesObjectRequestDto>(
+				FilesObjectRequestDto.class);
+		return response;
 	}
 
 	@DeleteMapping("/folder")
@@ -90,6 +111,13 @@ public class FileStorageController {
 		} catch (AmazonS3Exception e) {
 			throw new StoragePathNotFoundException("folderPath", requestDto.getFolderPath());
 		}
+	}
+
+	@GetMapping("/folder/request")
+	public RequestBodyResponseDto<FolderObjectRequestDto> getDeleteFolderRequest() {
+		RequestBodyResponseDto<FolderObjectRequestDto> response = new RequestBodyResponseDto<FolderObjectRequestDto>(
+				FolderObjectRequestDto.class);
+		return response;
 	}
 
 }
