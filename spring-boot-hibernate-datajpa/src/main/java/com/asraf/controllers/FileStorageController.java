@@ -49,7 +49,7 @@ public class FileStorageController {
 	@GetMapping("/presigned-url/request")
 	public RequestBodyResponseDto<PresignedUrlRequestDto> getPresignedUrlRequest() {
 		RequestBodyResponseDto<PresignedUrlRequestDto> response = new RequestBodyResponseDto<PresignedUrlRequestDto>(
-				PresignedUrlRequestDto.class);
+				PresignedUrlRequestDto.class).withSuperClass(1);
 		return response;
 	}
 
@@ -61,7 +61,8 @@ public class FileStorageController {
 
 	@GetMapping("/acl/request")
 	public RequestBodyResponseDto<AclRequestDto> getAclRequest() {
-		RequestBodyResponseDto<AclRequestDto> response = new RequestBodyResponseDto<AclRequestDto>(AclRequestDto.class);
+		RequestBodyResponseDto<AclRequestDto> response = new RequestBodyResponseDto<AclRequestDto>(AclRequestDto.class)
+				.withSuperClass(1);
 		return response;
 	}
 
