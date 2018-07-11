@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.asraf.dtos.request.FooRequestDto;
+import com.asraf.dtos.request.SampleRequestDto;
 
 @RestController
 @RequestMapping("/main")
@@ -34,7 +34,7 @@ public class MainController {
 	
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
-	public String create(@Valid @RequestBody FooRequestDto requestDto) {
+	public String create(@Valid @RequestBody SampleRequestDto requestDto) {
 		return "create";
 	}
 	
