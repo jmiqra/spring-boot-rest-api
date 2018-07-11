@@ -10,13 +10,34 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = EqualValueValidator.class)
+@Constraint(validatedBy = TwoSidedConditionalValidator.class)
 @Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TwoSidedConditionalConstraint {
+	
+    
 	String message() default "Invalid value";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
+
+	/**
+     * @return The first field
+     */
+    String first();
+
+    /**
+     * @return The second field
+     */
+    String second();
+	
+//    @Target({TYPE, ANNOTATION_TYPE})
+//    @Retention(RUNTIME)
+//    @Documented
+//            @interface List
+//    {
+//        FieldMatch[] value();
+//    }
+    
 }

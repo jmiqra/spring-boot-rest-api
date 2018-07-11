@@ -11,10 +11,10 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class FooRequestDto extends BaseRequestDto {
 
-	@TwoSidedConditionalConstraint
+	//TwoSidedConditionalConstraint(first = "phoneNo1", second = "phoneNo2")
 	private String phoneNo1;
 	
-	@TwoSidedConditionalConstraint
+	@TwoSidedConditionalConstraint(first = "phoneNo1", second = "phoneNo2")
 	private String phoneNo2; 
 	
 }
