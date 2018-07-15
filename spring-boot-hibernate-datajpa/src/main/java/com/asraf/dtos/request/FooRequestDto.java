@@ -9,15 +9,10 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@TestConstraint(baseField = "field1", matchField = "field2")
 public class FooRequestDto extends BaseRequestDto {
 
-	@TestConstraint
-	private String phoneNo;
-
-	// //TwoSidedConditionalConstraint(first = "phoneNo1", second = "phoneNo2")
-	// private String phoneNo1;
-	//
-	// @TwoSidedConditionalConstraint(first = "phoneNo1", second = "phoneNo2")
-	// private String phoneNo2;
+	private String field1;
+	private String field2;
 
 }
