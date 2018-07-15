@@ -1,5 +1,6 @@
 package com.asraf.validators;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -10,8 +11,9 @@ import javax.validation.Payload;
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {TestValidator.class})
-public @interface TestConstraint {
+@Constraint(validatedBy = {RequiredIfExistsValidator.class})
+@Documented
+public @interface RequiredIfExistsConstraint {
  
     String message() default "Invalid matching";
     Class<?>[] groups() default {};
@@ -20,5 +22,15 @@ public @interface TestConstraint {
     String baseField();
  
     String dependentField();
- 
+    
+    //String[] stringList();
+    
+    @Target({ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @interface List
+    {
+    	RequiredIfExistsConstraint[] value();
+    }
+    
 }

@@ -5,13 +5,15 @@ import java.lang.reflect.Field;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class TestValidator implements ConstraintValidator<TestConstraint, Object> {
+import com.asraf.utils.StringUtils;
+
+public class RequiredIfNotExistsValidator implements ConstraintValidator<RequiredIfNotExistsConstraint, Object> {
 
 	private String baseField;
 	private String dependentField;
 
 	@Override
-	public void initialize(TestConstraint constraint) {
+	public void initialize(RequiredIfNotExistsConstraint constraint) {
 		baseField = constraint.baseField();
 		dependentField = constraint.dependentField();
 	}
@@ -21,14 +23,11 @@ public class TestValidator implements ConstraintValidator<TestConstraint, Object
 		try {
 			Object baseFieldValue = getFieldValue(object, baseField);
 			Object dependentFieldValue = getFieldValue(object, dependentField);
-			// return baseFieldValue != null && baseFieldValue.equals(matchFieldValue);
-			boolean a = false;
-			if((baseFieldValue != null && dependentFieldValue != null)
-					|| (baseFieldValue == null && dependentFieldValue != null)
-					|| (baseFieldValue == null && dependentFieldValue == null)) {
-				a = true;
+			boolean flag = false;
+			if(baseFieldValue == null && !StringUtils.isNullOrWhitespace(dependentFieldValue.toString())) {
+				flag = true;
 			}
-			return a;
+			return flag;
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;
