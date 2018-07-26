@@ -17,14 +17,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.asraf.exceptions.FileStorageException;
 import com.asraf.exceptions.MyFileNotFoundException;
 import com.asraf.properties.FileStorageProperties;
+import com.asraf.services.FileStorageService;
 
 @Service
-public class FileStorageService {
+public class FileStorageServiceImpl implements FileStorageService {
 
 	private final Path fileStorageLocation;
 
 	@Autowired
-	public FileStorageService(FileStorageProperties fileStorageProperties) {
+	public FileStorageServiceImpl(FileStorageProperties fileStorageProperties) {
 		this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir()).toAbsolutePath().normalize();
 
 		try {

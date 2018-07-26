@@ -38,8 +38,8 @@ import com.asraf.dtos.response.PresignedUrlResponseDto;
 import com.asraf.dtos.response.UploadFileResponseDto;
 import com.asraf.dtos.response.requestdto.RequestBodyResponseDto;
 import com.asraf.exceptions.StoragePathNotFoundException;
+import com.asraf.services.FileStorageService;
 import com.asraf.services.aws.s3.S3ObjectService;
-import com.asraf.services.persistence.FileStorageService;
 
 @RestController
 @RequestMapping("/file-storage")

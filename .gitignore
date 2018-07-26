@@ -158,3 +158,4 @@ logs/
 
 # "temporary" build files
 /target
+uploads/
