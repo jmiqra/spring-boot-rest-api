@@ -1,6 +1,6 @@
-package com.asraf.dtos.response.filestorage;
+package com.asraf.dtos.response;
 
-import com.asraf.dtos.response.BaseResponseDto;
+import java.util.Date;
 
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +15,5 @@ public class PresignedUrlResponseDto extends BaseResponseDto {
 	private String presignedUrl;
 	private String filePath;
 	private String publicUrl;
+	private Date expirationTime;
 }

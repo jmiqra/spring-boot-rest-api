@@ -1,6 +1,7 @@
 package com.asraf.services.aws.s3;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 
 import com.amazonaws.HttpMethod;
@@ -27,12 +28,14 @@ public interface S3ObjectService {
 
 	ObjectListing getAllObjects(String prefix);
 
-	URL getPreSignedUrl(String key, HttpMethod httpMethod, int expirationInMinute);
+	URL getPreSignedUrl(String key, HttpMethod httpMethod, Date expirationTime);
 
 	DeleteObjectsResult deleteAllObjects(String prefix);
 
 	void delete(String key);
 
 	DeleteObjectsResult delete(List<String> keys);
+
+	Date getExpirationTime(Integer expirationInMinute);
 
 }

@@ -1,4 +1,4 @@
-package com.asraf.dtos.response;
+package com.asraf.dtos.response.entities;
 
 import java.util.Date;
 

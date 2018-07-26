@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.asraf.dtos.mapper.UserProfileMappper;
-import com.asraf.dtos.request.UserProfileRequestDto;
-import com.asraf.dtos.response.UserProfileResponseDto;
+import com.asraf.dtos.request.entities.UserProfileRequestDto;
+import com.asraf.dtos.response.entities.UserProfileResponseDto;
 import com.asraf.entities.User;
 import com.asraf.entities.UserProfile;
 

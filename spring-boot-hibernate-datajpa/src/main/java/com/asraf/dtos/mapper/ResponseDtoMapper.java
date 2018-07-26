@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import com.asraf.dtos.response.BaseEntityResponseDto;
+import com.asraf.dtos.response.entities.BaseEntityResponseDto;
 import com.asraf.entities.BaseEntity;
 
 public interface ResponseDtoMapper<TEntity extends BaseEntity, TResponseDto extends BaseEntityResponseDto> extends DtoMapper {

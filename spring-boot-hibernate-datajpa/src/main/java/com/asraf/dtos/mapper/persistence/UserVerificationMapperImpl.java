@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.asraf.dtos.mapper.UserVerificationMappper;
-import com.asraf.dtos.request.UserVerificationRequestDto;
-import com.asraf.dtos.response.UserVerificationResponseDto;
+import com.asraf.dtos.request.entities.UserVerificationRequestDto;
+import com.asraf.dtos.response.entities.UserVerificationResponseDto;
 import com.asraf.entities.UserVerification;
 
 @Component

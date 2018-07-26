@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asraf.dtos.mapper.UserProfileMappper;
-import com.asraf.dtos.request.UserProfileRequestDto;
-import com.asraf.dtos.response.UserProfileResponseDto;
+import com.asraf.dtos.request.entities.UserProfileRequestDto;
+import com.asraf.dtos.response.entities.UserProfileResponseDto;
 import com.asraf.entities.User;
 import com.asraf.entities.UserProfile;
 import com.asraf.services.UserProfileService;

@@ -32,13 +32,16 @@ public class S3ObjectServiceImpl implements S3ObjectService {
 	protected AmazonS3 s3Client;
 
 	protected final String BUCKET_NAME;
+	protected final int DEFAULT_EXPIRATION_IN_MINUTE;
 
 	private final String BUCKET_URL_PREFIX;
 
 	@Autowired
-	public S3ObjectServiceImpl(AmazonS3 s3Client, @Value("${aws.s3.bucket}") String bucketName) {
+	public S3ObjectServiceImpl(AmazonS3 s3Client, @Value("${aws.s3.bucket}") String bucketName,
+			@Value("${aws.s3.presigned.expiration}") int defaultExpirationInMinute) {
 		this.s3Client = s3Client;
 
+		DEFAULT_EXPIRATION_IN_MINUTE = defaultExpirationInMinute;
 		BUCKET_NAME = bucketName;
 		BUCKET_URL_PREFIX = "https://" + BUCKET_NAME + ".s3.amazonaws.com/";
 	}
@@ -87,12 +90,8 @@ public class S3ObjectServiceImpl implements S3ObjectService {
 		return objectListing;
 	}
 
-	public URL getPreSignedUrl(String key, HttpMethod httpMethod, int expirationInMinute) {
-		Date expiration = new Date();
-		long expTimeMillis = expiration.getTime();
-		expTimeMillis += 1000 * 60 * expirationInMinute;
-		expiration.setTime(expTimeMillis);
-		return s3Client.generatePresignedUrl(BUCKET_NAME, key, expiration, httpMethod);
+	public URL getPreSignedUrl(String key, HttpMethod httpMethod, Date expirationTime) {
+		return s3Client.generatePresignedUrl(BUCKET_NAME, key, expirationTime, httpMethod);
 	}
 
 	public DeleteObjectsResult deleteAllObjects(String prefix) {
@@ -108,10 +107,17 @@ public class S3ObjectServiceImpl implements S3ObjectService {
 	}
 
 	public DeleteObjectsResult delete(List<String> keys) {
-		List<KeyVersion> keyVersions = keys.stream().map(m -> new KeyVersion(m))
-				.collect(Collectors.toList());
+		List<KeyVersion> keyVersions = keys.stream().map(m -> new KeyVersion(m)).collect(Collectors.toList());
 		DeleteObjectsRequest deleteObjectsRequest = new DeleteObjectsRequest(BUCKET_NAME).withKeys(keyVersions);
 		return s3Client.deleteObjects(deleteObjectsRequest);
 	}
-	
+
+	public Date getExpirationTime(Integer expirationInMinute) {
+		expirationInMinute = expirationInMinute == null ? DEFAULT_EXPIRATION_IN_MINUTE : expirationInMinute;
+		Date expiration = new Date();
+		long expTimeMillis = expiration.getTime();
+		expTimeMillis += 1000 * 60 * expirationInMinute;
+		expiration.setTime(expTimeMillis);
+		return expiration;
+	}
 }

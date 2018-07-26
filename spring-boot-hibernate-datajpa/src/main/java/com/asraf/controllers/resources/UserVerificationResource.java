@@ -6,7 +6,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import com.asraf.controllers.UserController;
 import com.asraf.controllers.UserVerificationController;
 import com.asraf.dtos.mapper.UserVerificationMappper;
-import com.asraf.dtos.response.UserVerificationResponseDto;
+import com.asraf.dtos.response.entities.UserVerificationResponseDto;
 import com.asraf.entities.User;
 import com.asraf.entities.UserVerification;
 

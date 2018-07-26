@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.asraf.dtos.mapper.UserMappper;
-import com.asraf.dtos.request.UserRequestDto;
-import com.asraf.dtos.response.UserResponseDto;
+import com.asraf.dtos.request.entities.UserRequestDto;
+import com.asraf.dtos.response.entities.UserResponseDto;
 import com.asraf.entities.User;
 import com.asraf.models.search.UserSearch;
 import com.asraf.models.search.extended.UserWithVerificationSearch;

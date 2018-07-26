@@ -1,6 +1,8 @@
-package com.asraf.dtos.request;
+package com.asraf.dtos.request.entities;
 
 import javax.validation.constraints.NotNull;
+
+import com.asraf.dtos.request.BaseRequestDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,12 +11,12 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class UserVerificationRequestDto extends BaseRequestDto {
+public class UserProfileRequestDto extends BaseRequestDto {
 
 	@NotNull
-	private String verificationCode;
+	private String address;
 
 	@NotNull
-	private Long userId;
+	private String phoneNumber;
 
 }

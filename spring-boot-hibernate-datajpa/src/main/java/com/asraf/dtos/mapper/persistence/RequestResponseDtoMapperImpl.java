@@ -5,7 +5,7 @@ import org.modelmapper.PropertyMap;
 
 import com.asraf.dtos.mapper.RequestResponseDtoMapper;
 import com.asraf.dtos.request.BaseRequestDto;
-import com.asraf.dtos.response.BaseEntityResponseDto;
+import com.asraf.dtos.response.entities.BaseEntityResponseDto;
 import com.asraf.entities.BaseEntity;
 
 public abstract class RequestResponseDtoMapperImpl<TEntity extends BaseEntity, TResponseDto extends BaseEntityResponseDto, TRequestDto extends BaseRequestDto>
