@@ -34,7 +34,8 @@ public final class ExceptionPreconditions {
 	 * @throws ResourceNotFoundException
 	 *             if resource is null, means value not found
 	 */
-	public static <T> T entityNotFound(final Class<T> clazz, String... searchParamsMap) throws ResourceNotFoundException {
+	public static <T> T entityNotFound(final Class<T> clazz, String... searchParamsMap)
+			throws ResourceNotFoundException {
 		throw new ResourceNotFoundException(clazz, searchParamsMap);
 	}
 }

@@ -3,6 +3,8 @@ package com.asraf.validators;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import com.asraf.utils.StringUtils;
+
 public class ContactNumberValidator implements ConstraintValidator<ContactNumberConstraint, String> {
 
 	@Override
@@ -11,7 +13,7 @@ public class ContactNumberValidator implements ConstraintValidator<ContactNumber
 
 	@Override
 	public boolean isValid(String contactField, ConstraintValidatorContext cxt) {
-		return contactField == null
+		return StringUtils.isNullOrEmpty(contactField)
 				|| (contactField.matches("[0-9]+") && (contactField.length() > 10) && (contactField.length() < 14));
 	}
 

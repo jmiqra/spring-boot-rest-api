@@ -15,21 +15,22 @@ public class EnumValueValidator implements ConstraintValidator<EnumValueConstrai
 
 	@Override
 	public boolean isValid(String valueForValidation, ConstraintValidatorContext constraintValidatorContext) {
-		boolean result = false;
-
-		Object[] enumValues = this.annotation.enumClass().getEnumConstants();
-
-		if (!StringUtils.isNullOrWhitespace(valueForValidation) && enumValues != null) {
-			for (Object enumValue : enumValues) {
-				if (valueForValidation.equals(enumValue.toString()) || (this.annotation.ignoreCase()
-						&& valueForValidation.equalsIgnoreCase(enumValue.toString()))) {
-					result = true;
-					break;
-				}
-			}
+		if (StringUtils.isNullOrWhitespace(valueForValidation)) {
+			return true;
 		}
 
-		return result;
+		Object[] enumValues = this.annotation.enumClass().getEnumConstants();
+		if (enumValues == null) {
+			return false;
+		}
+
+		for (Object enumValue : enumValues) {
+			if (valueForValidation.equals(enumValue.toString())
+					|| (this.annotation.ignoreCase() && valueForValidation.equalsIgnoreCase(enumValue.toString()))) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

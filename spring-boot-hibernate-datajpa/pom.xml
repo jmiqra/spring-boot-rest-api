@@ -137,6 +137,20 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- Get value from application.properties file to a Bean -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- CSV -->
+		<dependency>
+			<groupId>org.simpleflatmapper</groupId>
+			<artifactId>sfm-csv</artifactId>
+			<version>3.19.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
