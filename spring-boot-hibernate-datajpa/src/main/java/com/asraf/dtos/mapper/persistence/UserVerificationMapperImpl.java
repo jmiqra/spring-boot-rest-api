@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.asraf.dtos.mapper.UserVerificationMappper;
+import com.asraf.dtos.mapper.UserVerificationMapper;
 import com.asraf.dtos.request.entities.UserVerificationRequestDto;
 import com.asraf.dtos.response.entities.UserVerificationResponseDto;
 import com.asraf.entities.UserVerification;
@@ -17,7 +17,7 @@ import com.asraf.entities.UserVerification;
 @Scope(value = "prototype")
 public class UserVerificationMapperImpl
 		extends RequestResponseDtoMapperImpl<UserVerification, UserVerificationResponseDto, UserVerificationRequestDto>
-		implements UserVerificationMappper {
+		implements UserVerificationMapper {
 
 	@Autowired
 	public UserVerificationMapperImpl(ModelMapper modelMapper) {

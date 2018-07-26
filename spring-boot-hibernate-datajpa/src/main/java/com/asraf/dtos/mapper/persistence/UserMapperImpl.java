@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.asraf.dtos.mapper.UserMappper;
+import com.asraf.dtos.mapper.UserMapper;
 import com.asraf.dtos.request.entities.UserRequestDto;
 import com.asraf.dtos.response.entities.UserResponseDto;
 import com.asraf.dtos.response.entities.UserVerificationResponseDto;
@@ -15,7 +15,7 @@ import com.asraf.entities.UserVerification;
 
 @Component
 @Scope(value = "prototype")
-public class UserMapperImpl extends RequestResponseDtoMapperImpl<User, UserResponseDto, UserRequestDto> implements UserMappper {
+public class UserMapperImpl extends RequestResponseDtoMapperImpl<User, UserResponseDto, UserRequestDto> implements UserMapper {
 
 	@Autowired
 	public UserMapperImpl(ModelMapper modelMapper) {

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.asraf.dtos.mapper.UserProfileMappper;
+import com.asraf.dtos.mapper.UserProfileMapper;
 import com.asraf.dtos.request.entities.UserProfileRequestDto;
 import com.asraf.dtos.response.entities.UserProfileResponseDto;
 import com.asraf.entities.User;
@@ -30,11 +30,11 @@ public class UserProfileController {
 
 	private UserProfileService userProfileService;
 	private UserService userService;
-	private UserProfileMappper userProfileMappper;
+	private UserProfileMapper userProfileMappper;
 
 	@Autowired
 	public UserProfileController(UserProfileService userProfileService, UserService userService,
-			UserProfileMappper userProfileMappper) {
+			UserProfileMapper userProfileMappper) {
 		this.userProfileMappper = userProfileMappper;
 		this.userService = userService;
 		this.userProfileService = userProfileService;

@@ -5,7 +5,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import com.asraf.controllers.UserController;
 import com.asraf.controllers.UserVerificationController;
-import com.asraf.dtos.mapper.UserVerificationMappper;
+import com.asraf.dtos.mapper.UserVerificationMapper;
 import com.asraf.dtos.response.entities.UserVerificationResponseDto;
 import com.asraf.entities.User;
 import com.asraf.entities.UserVerification;
@@ -18,7 +18,7 @@ public class UserVerificationResource extends BaseResource {
 	private final UserVerificationResponseDto userVerification;
 
 	public UserVerificationResource(final UserVerification userVerification,
-			final UserVerificationMappper userVerificationMappper) {
+			final UserVerificationMapper userVerificationMappper) {
 
 		this.userVerification = userVerificationMappper.getResponseDto(userVerification);
 		final long id = userVerification.getId();

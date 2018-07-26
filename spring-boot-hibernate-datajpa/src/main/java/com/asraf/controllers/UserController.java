@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.asraf.dtos.mapper.UserMappper;
+import com.asraf.dtos.mapper.UserMapper;
 import com.asraf.dtos.request.entities.UserRequestDto;
 import com.asraf.dtos.response.entities.UserResponseDto;
 import com.asraf.entities.User;
@@ -32,10 +32,10 @@ import com.asraf.services.UserService;
 public class UserController {
 
 	private UserService userService;
-	private UserMappper userMappper;
+	private UserMapper userMappper;
 
 	@Autowired
-	public UserController(UserService userService, UserMappper userMappper) {
+	public UserController(UserService userService, UserMapper userMappper) {
 		this.userMappper = userMappper;
 		this.userService = userService;
 	}

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.asraf.controllers.resources.UserVerificationCollectionResource;
 import com.asraf.controllers.resources.UserVerificationResource;
-import com.asraf.dtos.mapper.UserVerificationMappper;
+import com.asraf.dtos.mapper.UserVerificationMapper;
 import com.asraf.dtos.request.entities.UserVerificationRequestDto;
 import com.asraf.dtos.response.entities.UserVerificationResponseDto;
 import com.asraf.dtos.response.requestdto.RequestBodyResponseDto;
@@ -30,11 +30,11 @@ import com.asraf.services.UserVerificationService;
 public class UserVerificationController {
 
 	private UserVerificationService userVerificationService;
-	private UserVerificationMappper userVerificationMappper;
+	private UserVerificationMapper userVerificationMappper;
 
 	@Autowired
 	public UserVerificationController(UserVerificationService userVerificationService,
-			UserVerificationMappper userVerificationMappper) {
+			UserVerificationMapper userVerificationMappper) {
 		this.userVerificationMappper = userVerificationMappper;
 		this.userVerificationService = userVerificationService;
 	}
