@@ -1,6 +1,6 @@
 package com.asraf.dtos.request;
 
-import com.asraf.validators.IsLesserEqualConstraint;
+import com.asraf.validators.IsGreaterEqualConstraint;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,8 +15,8 @@ import lombok.ToString;
 // // @RequiredIfExistsConstraint(baseField = "field2", dependentField =
 // "field1")
 // })
-@IsLesserEqualConstraint.List({
-		@IsLesserEqualConstraint(baseField = "field1", dependentField = "field2", message = "Comparison error"), })
+@IsGreaterEqualConstraint.List({
+		@IsGreaterEqualConstraint(baseField = "field1", dependentField = "field2", message = "Comparison error"), })
 public class FooRequestDto extends BaseRequestDto {
 
 	private Float field1;
