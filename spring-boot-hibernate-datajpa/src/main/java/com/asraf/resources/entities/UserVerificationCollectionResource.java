@@ -1,4 +1,4 @@
-package com.asraf.controllers.resources;
+package com.asraf.resources.entities;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import com.asraf.controllers.UserVerificationController;
 import com.asraf.dtos.mapper.UserVerificationMapper;
 import com.asraf.entities.UserVerification;
+import com.asraf.resources.BaseResource;
 
 import lombok.Getter;
 

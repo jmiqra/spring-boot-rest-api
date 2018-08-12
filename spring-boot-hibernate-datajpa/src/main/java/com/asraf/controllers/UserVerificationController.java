@@ -1,5 +1,9 @@
 package com.asraf.controllers;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,27 +20,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.asraf.controllers.resources.UserVerificationCollectionResource;
-import com.asraf.controllers.resources.UserVerificationResource;
 import com.asraf.dtos.mapper.UserVerificationMapper;
 import com.asraf.dtos.request.entities.UserVerificationRequestDto;
-import com.asraf.dtos.response.entities.UserVerificationResponseDto;
 import com.asraf.dtos.response.requestdto.RequestBodyResponseDto;
+import com.asraf.dtos.response.requestdto.RequestDataCollectionResponseDto;
 import com.asraf.entities.UserVerification;
+import com.asraf.resources.assemblers.entities.UserVerificationResourceAssembler;
+import com.asraf.resources.entities.UserVerificationCollectionResource;
+import com.asraf.resources.entities.UserVerificationResource;
 import com.asraf.services.UserVerificationService;
 
 @RestController
 @RequestMapping("/user-verifications")
-public class UserVerificationController {
+public class UserVerificationController extends BaseController {
 
-	private UserVerificationService userVerificationService;
-	private UserVerificationMapper userVerificationMappper;
+	private final UserVerificationService userVerificationService;
+	private final UserVerificationMapper userVerificationMappper;
+	private final UserVerificationResourceAssembler userVerificationResourceAssembler;
 
 	@Autowired
 	public UserVerificationController(UserVerificationService userVerificationService,
-			UserVerificationMapper userVerificationMappper) {
+			UserVerificationMapper userVerificationMappper,
+			UserVerificationResourceAssembler userVerificationResourceAssembler) {
 		this.userVerificationMappper = userVerificationMappper;
 		this.userVerificationService = userVerificationService;
+		this.userVerificationResourceAssembler = userVerificationResourceAssembler;
 	}
 
 	@GetMapping("")
@@ -48,39 +56,48 @@ public class UserVerificationController {
 	@GetMapping("/{id}")
 	public UserVerificationResource getById(@PathVariable long id) {
 		UserVerification userVerification = userVerificationService.getById(id);
-		return new UserVerificationResource(userVerification, userVerificationMappper);
-	}
-
-	@GetMapping("/form")
-	public RequestBodyResponseDto<UserVerificationRequestDto> getForm() {
-		RequestBodyResponseDto<UserVerificationRequestDto> response = new RequestBodyResponseDto<UserVerificationRequestDto>(
-				UserVerificationRequestDto.class);
-		return response;
+		return this.userVerificationResourceAssembler.toResource(userVerification);
 	}
 
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
-	public UserVerificationResponseDto create(@Valid @RequestBody UserVerificationRequestDto requestDto) {
+	public UserVerificationResource create(@Valid @RequestBody UserVerificationRequestDto requestDto) {
 		UserVerification userVerification = userVerificationMappper.getEntity(requestDto);
 		userVerificationService.save(userVerification);
-		return userVerificationMappper.getResponseDto(userVerification);
+		return this.userVerificationResourceAssembler.toResource(userVerification);
 	}
 
 	@DeleteMapping("/{id}")
-	public UserVerificationResponseDto delete(@PathVariable long id) {
+	public UserVerificationResource delete(@PathVariable long id) {
 		UserVerification userVerification = userVerificationService.getById(id);
-		UserVerificationResponseDto response = userVerificationMappper.getResponseDto(userVerification);
+		UserVerificationResource response = this.userVerificationResourceAssembler.toResource(userVerification)
+				.forDeletion();
 		userVerificationService.delete(userVerification);
 		return response;
 	}
 
 	@PutMapping("/{id}")
-	public UserVerificationResponseDto update(@PathVariable long id,
+	public UserVerificationResource update(@PathVariable long id,
 			@Valid @RequestBody UserVerificationRequestDto requestDto) {
 		UserVerification userVerification = userVerificationService.getById(id);
 		userVerificationMappper.loadEntity(requestDto, userVerification);
 		userVerificationService.save(userVerification);
-		return userVerificationMappper.getResponseDto(userVerification);
+		return this.userVerificationResourceAssembler.toResource(userVerification);
+	}
+
+	@GetMapping("/requests")
+	public RequestDataCollectionResponseDto getRequests() {
+		RequestDataCollectionResponseDto requestDataCollection = new RequestDataCollectionResponseDto();
+		this.addRequestDataOfPost(requestDataCollection);
+		return requestDataCollection;
+	}
+
+	private UserVerificationController addRequestDataOfPost(RequestDataCollectionResponseDto requestDataCollection) {
+		RequestBodyResponseDto<UserVerificationRequestDto> requestBody = new RequestBodyResponseDto<UserVerificationRequestDto>(
+				UserVerificationRequestDto.class);
+		URI uri = linkTo(methodOn(UserVerificationController.class).create(null)).toUri();
+		requestDataCollection.addRequest(uri, org.springframework.http.HttpMethod.POST, requestBody);
+		return this;
 	}
 
 }
