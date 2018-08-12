@@ -1,9 +1,13 @@
 package com.asraf.repositories.persistence;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.EntityManager;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.TransformerUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
@@ -13,11 +17,15 @@ import org.springframework.data.querydsl.EntityPathResolver;
 import org.springframework.data.querydsl.SimpleEntityPathResolver;
 import org.springframework.data.repository.support.PageableExecutionUtils;
 
+import com.asraf.constants.ColumnType;
 import com.asraf.entities.BaseEntity;
 import com.asraf.repositories.ExtendedQueryDslJpaRepository;
 import com.querydsl.core.types.EntityPath;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 public class ExtendedQueryDslJpaRepositoryImpl<TEntity extends BaseEntity, ID extends Serializable>
 		extends QuerydslJpaRepository<TEntity, ID> implements ExtendedQueryDslJpaRepository<TEntity, ID> {
@@ -28,7 +36,6 @@ public class ExtendedQueryDslJpaRepositoryImpl<TEntity extends BaseEntity, ID ex
 	private final PathBuilder<TEntity> builder;
 	private final Querydsl querydsl;
 
-	@SuppressWarnings("unused")
 	private EntityManager entityManager;
 
 	public ExtendedQueryDslJpaRepositoryImpl(JpaEntityInformation<TEntity, ID> entityInformation,
@@ -47,18 +54,37 @@ public class ExtendedQueryDslJpaRepositoryImpl<TEntity extends BaseEntity, ID ex
 		this.entityManager = entityManager;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public <T1> Page<T1> findAll(JPQLQuery<?> jpqlQuery, Pageable pageable) {
+	public Page<TEntity> findAll(JPQLQuery<TEntity> jpqlQuery, Pageable pageable) {
 
-		// Count query
 		final JPQLQuery<?> countQuery = jpqlQuery;
 
-		// Apply pagination
-		JPQLQuery<T1> query = (JPQLQuery<T1>) querydsl.applyPagination(pageable, jpqlQuery);
+		JPQLQuery<TEntity> query = (JPQLQuery<TEntity>) querydsl.applyPagination(pageable, jpqlQuery);
 
-		// Run query
 		return PageableExecutionUtils.getPage(query.fetch(), pageable, countQuery::fetchCount);
+	}
+
+	public Page<TEntity> getByDistinctColumn(String columnName, ColumnType columnType, Pageable pageable) {
+		JPQLQuery<TEntity> countQuery = this.getCountQuery(columnName, columnType);
+		JPQLQuery<TEntity> query = (JPQLQuery<TEntity>) querydsl.applyPagination(pageable, countQuery);
+		return PageableExecutionUtils.getPage(query.fetch(), pageable, countQuery::fetchCount);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <TReturn> Page<TReturn> getListOfDistinctColumn(String columnName, ColumnType columnType,
+			Pageable pageable) {
+		Page<TEntity> pagedEntity = this.getByDistinctColumn(columnName, columnType, pageable);
+		String methodName = "get" + org.apache.commons.lang3.StringUtils.capitalize(columnName);
+		Collection<TReturn> content = CollectionUtils.collect(pagedEntity.getContent(),
+				TransformerUtils.invokerTransformer(methodName));
+		return PageableExecutionUtils.getPage(new ArrayList<TReturn>(content), pageable,
+				this.getCountQuery(columnName, columnType)::fetchCount);
+	}
+
+	private JPQLQuery<TEntity> getCountQuery(String columnName, ColumnType columnType) {
+		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
+		return queryFactory.select(Projections.bean(this.path, Expressions.path(columnType.getTypeClass(), columnName)))
+				.distinct().from(this.path);
 	}
 
 }

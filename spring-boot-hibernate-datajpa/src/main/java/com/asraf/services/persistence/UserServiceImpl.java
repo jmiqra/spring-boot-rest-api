@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.asraf.constants.ColumnType;
 import com.asraf.entities.User;
 import com.asraf.models.search.UserSearch;
 import com.asraf.models.search.extended.UserWithVerificationSearch;
@@ -83,6 +84,10 @@ public class UserServiceImpl implements UserService {
 		Specification<User> spec = rootNode.accept(new CustomRsqlVisitor<User>());
 		Page<User> users = userRepository.findAll(spec, pageable);
 		return users;
+	}
+
+	public Page<Object> getByDistinctColumn(String columnName, ColumnType columnType, Pageable pageable) {
+		return userRepository.getByDistinctColumn(columnName, columnType, pageable);
 	}
 
 }

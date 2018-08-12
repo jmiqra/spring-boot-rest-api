@@ -9,6 +9,10 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +30,6 @@ import com.asraf.dtos.response.requestdto.RequestBodyResponseDto;
 import com.asraf.dtos.response.requestdto.RequestDataCollectionResponseDto;
 import com.asraf.entities.UserVerification;
 import com.asraf.resources.assemblers.entities.UserVerificationResourceAssembler;
-import com.asraf.resources.entities.UserVerificationCollectionResource;
 import com.asraf.resources.entities.UserVerificationResource;
 import com.asraf.services.UserVerificationService;
 
@@ -48,9 +51,16 @@ public class UserVerificationController extends BaseController {
 	}
 
 	@GetMapping("")
-	public UserVerificationCollectionResource getAll() {
+	public PagedResources<UserVerificationResource> getByQuery(String search, Pageable pageable,
+			PagedResourcesAssembler<UserVerification> pagedAssembler) {
+		Page<UserVerification> userVerifications = userVerificationService.getByQuery(search, pageable);
+		return pagedAssembler.toResource(userVerifications, this.userVerificationResourceAssembler);
+	}
+
+	@GetMapping("/all")
+	public List<UserVerificationResource> getAll() {
 		List<UserVerification> userVerifications = (List<UserVerification>) this.userVerificationService.getAll();
-		return new UserVerificationCollectionResource(userVerifications, userVerificationMappper);
+		return this.userVerificationResourceAssembler.toResources(userVerifications);
 	}
 
 	@GetMapping("/{id}")

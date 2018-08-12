@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.asraf.constants.ColumnType;
 import com.asraf.entities.QUser;
 import com.asraf.entities.QUserVerification;
 import com.asraf.entities.User;
@@ -52,7 +53,7 @@ public class UserRepositoryExtendedImpl implements UserRepositoryExtended {
 			Date date = Date.from(searchItem.getCreationTime().atStartOfDay(ZoneId.systemDefault()).toInstant());
 			predicate.and(qUserVerification.creationTime.after(date));
 		}
-		
+
 		query.from(qUser).join(qUser.userVerifications, qUserVerification).where(predicate).distinct();
 
 		return userRepositoryQdsl.findAll(query, pageable);
@@ -63,4 +64,9 @@ public class UserRepositoryExtendedImpl implements UserRepositoryExtended {
 		JPQLQuery<User> query = new JPAQuery<>(entityManager);
 		return query.from(qUser).where(qUser.name.eq(searchItem.getName())).fetch();
 	}
+
+	public Page<Object> getByDistinctColumn(String columnName, ColumnType columnType, Pageable pageable) {
+		return userRepositoryQdsl.getListOfDistinctColumn(columnName, columnType, pageable);
+	}
+
 }

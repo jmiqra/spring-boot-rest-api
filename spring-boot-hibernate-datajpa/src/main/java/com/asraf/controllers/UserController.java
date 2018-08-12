@@ -23,6 +23,7 @@ import com.asraf.dtos.mapper.UserMapper;
 import com.asraf.dtos.request.entities.UserRequestDto;
 import com.asraf.dtos.response.entities.UserResponseDto;
 import com.asraf.entities.User;
+import com.asraf.models.pathvariable.ColumnPathvariable;
 import com.asraf.models.search.UserSearch;
 import com.asraf.models.search.extended.UserWithVerificationSearch;
 import com.asraf.services.UserService;
@@ -122,6 +123,12 @@ public class UserController {
 		userMappper.loadEntity(requestDto, user);
 		userService.save(user);
 		return userMappper.getResponseDto(user);
+	}
+
+	@GetMapping("/({columnName},{columnType})/distinct")
+	public Page<Object> getByDistinctColumn(ColumnPathvariable columnPathvariable, Pageable pageable) {
+		return userService.getByDistinctColumn(columnPathvariable.getColumnName(),
+				columnPathvariable.getColumnTypeEnum(), pageable);
 	}
 
 }
