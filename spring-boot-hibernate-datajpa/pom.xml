@@ -158,6 +158,12 @@
 			<version>1.3.11</version>
 		</dependency>
 
+		<!-- Content Negotiation -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
