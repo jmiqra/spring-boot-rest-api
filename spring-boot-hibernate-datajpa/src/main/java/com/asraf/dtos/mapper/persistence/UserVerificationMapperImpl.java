@@ -28,6 +28,9 @@ public class UserVerificationMapperImpl
 				map().getUser().setId(source.getUserId());
 				// map().setCreationTime(new Date());
 				// using(convertMassToLarge).map(source.getMass()).setLarge(false);
+				
+				// for mapping object field with different name
+				// map(source.getUser(), destination.getCustomUser());
 			}
 		};
 
